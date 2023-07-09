@@ -1,3 +1,17 @@
+# Personal blog
+
+A personal project replicating a blogging platform for myself. Runs on a separate C# server project `https://github.com/joeglDev/cSharp-webserver-personal-blog`.
+
+## Technologies
+
+- Typescript
+- Next.js
+- React.js
+- Husky
+- prettier
+- Styled Components
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
