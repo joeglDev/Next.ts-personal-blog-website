@@ -11,7 +11,6 @@ A personal project replicating a blogging platform for myself. Runs on a separat
 - prettier
 - Styled Components
 
-
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
