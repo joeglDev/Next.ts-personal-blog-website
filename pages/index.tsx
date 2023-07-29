@@ -4,7 +4,7 @@ import {
   LoginButton,
   LoginContainer,
   LoginWrapper,
-  LoginInput
+  LoginInput,
 } from "../components/LoginWrapper";
 import { WarningBanner } from "../components/WarningBanner";
 
@@ -13,8 +13,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [loginWarning, setLoginWarning] = useState(false);
 
-  const loginWarningString = 'Please enter a valid username and / or password.';
-            
+  const loginWarningString = "Please enter a valid username and / or password.";
 
   const pageWarning = () => {
     //idea from Mastodon: @jaseg@chaos.social
@@ -27,54 +26,41 @@ export default function Home() {
   };
 
   const checkValue = (value: string) => {
-    value === "" ?
-      setLoginWarning(true) 
-      :
-      setLoginWarning(false);
+    value === "" ? setLoginWarning(true) : setLoginWarning(false);
   };
 
   return (
     <>
       {pageWarning() ? (
-        <DRMWarningBanner/>
-         
+        <DRMWarningBanner />
       ) : (
         /** page content here - night/day login or if not test button */
         <LoginContainer>
-
-        <LoginWrapper>
-
-  
+          <LoginWrapper>
             <LoginInput
               type="text"
               id="username"
               placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}     
-              onBlur={(e) => { checkValue(e.target.value)}}
+              onChange={(e) => setUsername(e.target.value)}
+              onBlur={(e) => {
+                checkValue(e.target.value);
+              }}
             ></LoginInput>
-    
 
-     
             <LoginInput
               type="text"
               id="password"
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
-              onBlur={(e) => { checkValue(e.target.value)}}
+              onBlur={(e) => {
+                checkValue(e.target.value);
+              }}
             ></LoginInput>
 
-            { loginWarning ? (<WarningBanner value={loginWarningString} />) : (null)}
+            {loginWarning ? <WarningBanner value={loginWarningString} /> : null}
 
-      
-
-     
-            <LoginButton
-            >
-              Sign in</LoginButton>
-      
-
-        </LoginWrapper>
-
+            <LoginButton>Sign in</LoginButton>
+          </LoginWrapper>
         </LoginContainer>
       )}
     </>
