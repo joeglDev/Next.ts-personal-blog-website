@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserWarningBanner } from "../components/BrowserWarningBanner";
+import { DRMWarningBanner } from "../components/DRMWarningBanner ";
 import {
   LoginButton,
   LoginWrapper,
@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <>
       {pageWarning() ? (
-        <BrowserWarningBanner />
+        <DRMWarningBanner/>
       ) : (
         /** page content here - night/day login or if not test button */
         <LoginWrapper>
@@ -43,12 +43,6 @@ export default function Home() {
               id="password"
               onChange={(e) => setPassword(e.target.value)}
             ></input>
-          </LoginWrapperElement>
-
-          <LoginWrapperElement>
-            <LoginButton aria-label="click here to access non-login test preview">
-              Test preview
-            </LoginButton>
           </LoginWrapperElement>
 
           <LoginWrapperElement>
