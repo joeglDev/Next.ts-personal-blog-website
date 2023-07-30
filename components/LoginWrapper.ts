@@ -8,15 +8,15 @@ export const LoginContainer = styled.div`
   height: 100vh;
 `;
 
-export const LoginWrapper = styled.div`
+export const LoginWrapper = styled.div<{ lightMode: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10%;
-  background-color: ${COLOURS.dark.cardBackground};
-  color: ${COLOURS.dark.textColour};
+  background-color: ${(p) =>
+    p.lightMode ? COLOURS.light.cardBackground : COLOURS.dark.cardBackground};
   margin: 0;
-  height: 60vh;
+  height: 80vh;
   width: 50vw;
   padding: 3rem;
   border-radius: 5%;
@@ -41,4 +41,11 @@ export const LoginButton = styled.button`
     background-color: ${COLOURS.highlightBlue};
     color: white;
   }
+`;
+
+export const ThemeButton = styled(LoginButton)`
+  display: block;
+  position: relative;
+  margin: 2% auto 2% auto;
+  height: 10vh;
 `;

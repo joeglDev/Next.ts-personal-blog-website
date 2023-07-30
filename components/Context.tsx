@@ -16,7 +16,7 @@ const defaultValue: defaultValueInterface = {
   setCurrentUser: () => {},
 };
 
-const context = createContext(defaultValue);
+export const context = createContext(defaultValue);
 
 export const ContextProvider = (props: PropsWithChildren) => {
   const [lightMode, setLightMode] = useState(defaultValue.lightMode);
