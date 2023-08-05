@@ -18,12 +18,12 @@ export default function MainView() {
 
       <MainViewWrapper>
         <MainViewItemWrapper width={25}>
-          {" "}
-          <Statistics />{" "}
+          
+          <Statistics />
         </MainViewItemWrapper>
         <MainViewItemWrapper width={75}>
-          {" "}
-          <Feed />{" "}
+          
+          <Feed />
         </MainViewItemWrapper>
       </MainViewWrapper>
     </ThemeContainer>

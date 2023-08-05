@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { COLOURS } from "../../globals/colours";
 
 export const MainViewWrapper = styled.div`
   display: flex;

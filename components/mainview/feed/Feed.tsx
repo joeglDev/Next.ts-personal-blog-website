@@ -1,5 +1,3 @@
-import { MainViewItemWrapper } from "../MainView.style";
-
 export const Feed = () => {
   return (
     <>
