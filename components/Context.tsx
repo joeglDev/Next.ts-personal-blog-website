@@ -1,6 +1,4 @@
-import { PropsWithChildren, ReactNode, createContext, useState } from "react";
-import "lodash/noop";
-import { NextComponentType, NextPageContext } from "next";
+import { PropsWithChildren, createContext, useState } from "react";
 
 interface defaultValueInterface {
   lightMode: boolean;
