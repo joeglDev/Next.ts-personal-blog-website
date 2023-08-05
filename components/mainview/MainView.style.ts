@@ -1,15 +1,12 @@
 import styled from "@emotion/styled";
+import { COLOURS } from "../../globals/colours";
 
 export const MainViewWrapper = styled.div`
-display: flex;
-flex-flow: row;
-height: 100vh;
-flex: 3 1;
+  display: flex;
+  height: 100vh;
 `;
 
-export const MainViewItemWrapper = styled.div<{width: string}>`
-display: flex;
-flex: 3 1;
-width: ${(p) => p.width};
-gap: 0;
+export const MainViewItemWrapper = styled.div<{ width: number }>`
+  width: ${(p) => p.width}vw;
+  height: 100vh;
 `;
