@@ -3,14 +3,14 @@ import { PropsWithChildren, createContext, useState } from "react";
 interface defaultValueInterface {
   lightMode: boolean;
   setLightMode: (value: boolean) => void;
-  currentUser: string;
-  setCurrentUser: (value: string) => void;
+  currentUser: string | null;
+  setCurrentUser: (value: string | null) => void;
 }
 
 const defaultValue: defaultValueInterface = {
   lightMode: true,
   setLightMode: () => {},
-  currentUser: "",
+  currentUser: null,
   setCurrentUser: () => {},
 };
 

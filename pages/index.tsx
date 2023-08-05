@@ -10,9 +10,11 @@ import {
 import { WarningBanner } from "../components/WarningBanner";
 import { context } from "../components/Context";
 import { ThemeContainer } from "../components/ThemeContainer";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  const { lightMode, setLightMode } = useContext(context);
+  const { lightMode, setLightMode, setCurrentUser } = useContext(context);
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginWarning, setLoginWarning] = useState(false);
@@ -31,6 +33,16 @@ export default function Home() {
 
   const checkValue = (value: string) => {
     value === "" ? setLoginWarning(true) : setLoginWarning(false);
+  };
+
+  //eventually set api to check for a valid user login and reject if not
+  const onLogin = () => {
+    if (username.length && !loginWarning && password.length) {
+      setCurrentUser(username);
+      router.push("/MainView");
+    } else {
+      setLoginWarning(true);
+    }
   };
 
   return (
@@ -67,7 +79,7 @@ export default function Home() {
                 <WarningBanner value={loginWarningString} />
               ) : null}
 
-              <LoginButton>Sign in</LoginButton>
+              <LoginButton onClick={() => onLogin()}>Sign in</LoginButton>
 
               <ThemeButton
                 onClick={() => {
