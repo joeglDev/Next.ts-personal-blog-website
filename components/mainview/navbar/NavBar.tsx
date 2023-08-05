@@ -6,7 +6,7 @@ import {
   NavBarWrapper,
   NavButton,
 } from "./NavBar.style";
-import { context } from "../Context";
+import { context } from "../../Context";
 import { useRouter } from "next/router";
 
 export const NavBar = () => {

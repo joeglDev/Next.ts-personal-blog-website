@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { COLOURS } from "../../globals/colours";
+import { COLOURS } from "../../../globals/colours";
 
 export const NavBarWrapper = styled.nav<{ lightMode: boolean }>`
   display: flex;
