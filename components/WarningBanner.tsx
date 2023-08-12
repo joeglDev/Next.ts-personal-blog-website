@@ -12,6 +12,7 @@ export const WarningBanner = ({ value }: WarningBannerProps) => {
     background-color: ${COLOURS.warning};
     color: white;
     padding: 0.5rem;
+    text-align: center;
   `;
 
   return <WarningBanner>{value}</WarningBanner>;
