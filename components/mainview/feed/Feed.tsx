@@ -4,15 +4,7 @@ import { WarningBanner } from "../../WarningBanner";
 import { FeedWrapper } from "./Feed.style";
 import { context } from "../../Context";
 import { BlogPostCard } from "./BlogPostCard";
-
-export interface BlogPost {
-  id: number;
-  author: string;
-  title: string;
-  content: string;
-  likes: number;
-  //add a datetime sometime
-};
+import { BlogPost } from "./Feed.types";
 
 export const Feed = () => {
 const [foundPosts, setFoundposts] = useState(false);
@@ -29,7 +21,7 @@ const initialBlogPosts = getBlogPostStaticProps().then((data: BlogPost[]) => set
     {
       blogPosts.length ? 
       
-        blogPosts.map((post: BlogPost) =>  <BlogPostCard post={post}/>)
+        blogPosts.map((post: BlogPost) =>  <BlogPostCard post={post} key={post.id}/>)
          : (<WarningBanner value={noPostsFoundWarning}/>)
     }
     <button>Post a new one</button>

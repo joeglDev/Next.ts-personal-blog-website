@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BlogPost } from "./Feed";
+import { BlogPost } from "./Feed.types";
 import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
 import { context } from "../../Context";
 
@@ -8,7 +8,7 @@ post: BlogPost;
 };
 
 export const BlogPostCard = ({post}: BlogPostCardProps) => {
-    const {title, likes, author, content} = post;
+    const {title, likes, author, content, timeStamp} = post;
     const {lightMode, currentUser} = useContext(context);
 
 return (
@@ -17,6 +17,7 @@ return (
         <p>{content}</p>
 
         <BlogPostCardFlex>
+            <p>{timeStamp}</p>
             <p>{likes}</p> {/*convert to btn */}
             <p>{author}</p> {/*link to author bio */}
             {author === currentUser ? <button>delete post</button> : null}
