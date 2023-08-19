@@ -1,8 +1,8 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { BlogPost } from "./Feed.types";
 import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
 import { context } from "../../Context";
-import { LikeButton } from "./BlogPostCard.style";
+import { LikeButton, LikesText } from "./BlogPostCard.style";
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -11,6 +11,27 @@ interface BlogPostCardProps {
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { title, likes, author, content, timeStamp } = post;
   const { lightMode, currentUser } = useContext(context);
+  const [liked, setLiked] = useState(false);
+  const [likedCount, setLikedCount] = useState(0);
+
+  //get original number of likes from post
+
+
+  const handleLike = () => {
+    const isFirstLike = !liked;
+if (isFirstLike) {
+  //optimistic rendering
+  setLikedCount( likedCount + 1);
+
+} else {
+  //optimistic rendering
+  setLikedCount( likedCount - 1);
+  //remove like from api
+}
+
+setLiked(!liked);
+
+  };
 
   return (
     <BlogPostCardwrapper lightMode={lightMode}>
@@ -19,7 +40,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
       <BlogPostCardFlex>
         <p>{timeStamp}</p>
-        <LikeButton lightMode={lightMode}><button>{likes}</button></LikeButton>
+        <LikeButton onClick={handleLike} lightMode={lightMode} liked={liked}><LikesText>{likes + likedCount}</LikesText></LikeButton>
         <p>{author}</p> {/*link to author bio */}
         {author === currentUser ? <button>delete post</button> : null}
       </BlogPostCardFlex>
