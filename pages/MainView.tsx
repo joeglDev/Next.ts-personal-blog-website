@@ -18,11 +18,9 @@ export default function MainView() {
 
       <MainViewWrapper>
         <MainViewItemWrapper width={25}>
-          
           <Statistics />
         </MainViewItemWrapper>
         <MainViewItemWrapper width={75}>
-          
           <Feed />
         </MainViewItemWrapper>
       </MainViewWrapper>

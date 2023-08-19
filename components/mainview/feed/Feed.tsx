@@ -7,24 +7,24 @@ import { BlogPostCard } from "./BlogPostCard";
 import { BlogPost } from "./Feed.types";
 
 export const Feed = () => {
-const [foundPosts, setFoundposts] = useState(false);
-const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-const {lightMode} = useContext(context);
+  const [foundPosts, setFoundposts] = useState(false);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const { lightMode } = useContext(context);
 
-const noPostsFoundWarning = '404 - Cannot retrieve posts.';
+  const noPostsFoundWarning = "404 - Cannot retrieve posts.";
 
-const initialBlogPosts = getBlogPostStaticProps().then((data: BlogPost[]) => setBlogPosts(data));
-
+  const fetchPosts = getBlogPostStaticProps().then((data: BlogPost[]) => setBlogPosts(data));
 
   return (
     <FeedWrapper lightMode={lightMode}>
-    {
-      blogPosts.length ? 
-      
-        blogPosts.map((post: BlogPost) =>  <BlogPostCard post={post} key={post.id}/>)
-         : (<WarningBanner value={noPostsFoundWarning}/>)
-    }
-    <button>Post a new one</button>
+      {blogPosts.length ? (
+        blogPosts.map((post: BlogPost) => (
+          <BlogPostCard post={post} key={post.id} />
+        ))
+      ) : (
+        <WarningBanner value={noPostsFoundWarning} />
+      )}
+      <button>Post</button>
     </FeedWrapper>
   );
 };

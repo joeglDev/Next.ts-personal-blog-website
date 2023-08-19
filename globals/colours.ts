@@ -1,6 +1,7 @@
 export const COLOURS = {
   warning: "#ee6969",
   highlightBlue: " 	#0096FF",
+  highlightPink: "#FC46AA",
   dark: {
     background: "#121212",
     cardBackground: "#404040",
