@@ -1,20 +1,19 @@
-import styled from "@emotion/styled"; 
+import styled from "@emotion/styled";
 import { COLOURS } from "../../../globals/colours";
 
 const heartSize = 5;
 
-export const LikeButton = styled.button<{ lightMode: boolean, liked: boolean }>`
-    position: relative;
-    width: ${heartSize}rem;
-    height: ${heartSize * 0.9}rem;
+export const LikeButton = styled.button<{ lightMode: boolean; liked: boolean }>`
+  position: relative;
+  width: ${heartSize}rem;
+  height: ${heartSize * 0.9}rem;
 
-    border: none;
-    background-color: ${(p) =>
-        p.lightMode ? COLOURS.light.background : COLOURS.dark.background};
-    color: ${COLOURS.dark.textColour};
-    z-index: 0;
+  border: none;
+  background-color: ${(p) =>
+    p.lightMode ? COLOURS.light.background : COLOURS.dark.background};
+  color: ${COLOURS.dark.textColour};
+  z-index: 0;
 
-  
   &::before {
     z-index: 0;
     opacity: 1 !important;
@@ -30,7 +29,7 @@ export const LikeButton = styled.button<{ lightMode: boolean, liked: boolean }>`
     transform: rotate(-45deg);
     transform-origin: 0 100%;
   }
-  
+
   &::after {
     z-index: 0;
     opacity: 1 !important;
@@ -53,11 +52,11 @@ export const LikeButton = styled.button<{ lightMode: boolean, liked: boolean }>`
 `;
 
 export const LikesText = styled.p`
-z-index: 1;
-position: relative;
-color: ${COLOURS.dark.textColour};
-font-weight: bold;
-font-size: 4vh;
-bottom: 3.5vh;
-left: 0.05vw;
+  z-index: 1;
+  position: relative;
+  color: ${COLOURS.dark.textColour};
+  font-weight: bold;
+  font-size: 4vh;
+  bottom: 3.5vh;
+  left: 0.05vw;
 `;

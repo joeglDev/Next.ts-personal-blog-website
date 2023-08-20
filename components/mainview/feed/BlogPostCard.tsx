@@ -13,24 +13,20 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { lightMode, currentUser } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
-
-  //get original number of likes from post
-
+  console.log(likes);
 
   const handleLike = () => {
     const isFirstLike = !liked;
-if (isFirstLike) {
-  //optimistic rendering
-  setLikedCount( likedCount + 1);
+    if (isFirstLike) {
+      //optimistic rendering
+      setLikedCount(likedCount + 1);
+    } else {
+      //optimistic rendering
+      setLikedCount(likedCount - 1);
+      //remove like from api
+    }
 
-} else {
-  //optimistic rendering
-  setLikedCount( likedCount - 1);
-  //remove like from api
-}
-
-setLiked(!liked);
-
+    setLiked(!liked);
   };
 
   return (
@@ -40,7 +36,9 @@ setLiked(!liked);
 
       <BlogPostCardFlex>
         <p>{timeStamp}</p>
-        <LikeButton onClick={handleLike} lightMode={lightMode} liked={liked}><LikesText>{likes + likedCount}</LikesText></LikeButton>
+        <LikeButton onClick={handleLike} lightMode={lightMode} liked={liked}>
+          <LikesText>{likes.length + likedCount}</LikesText>
+        </LikeButton>
         <p>{author}</p> {/*link to author bio */}
         {author === currentUser ? <button>delete post</button> : null}
       </BlogPostCardFlex>

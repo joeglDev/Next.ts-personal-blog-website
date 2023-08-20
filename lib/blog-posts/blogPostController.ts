@@ -1,6 +1,6 @@
 import { getBlogPosts } from "./blogPostModel";
 
-export const getBlogPostStaticProps = async () => {
+export const getBlogPostServerProps = async () => {
   const posts = await getBlogPosts();
   return posts;
 };
