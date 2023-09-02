@@ -9,10 +9,10 @@ import { NewPostPanel } from "./NewPostPanel";
 //stats
 //user page from navbar
 export const SidePanel = () => {
-  const {lightMode} = useContext(context);
+  const { lightMode } = useContext(context);
   return (
     <SidePanelWrapper lightMode={lightMode}>
       <NewPostPanel />
-      </SidePanelWrapper>
+    </SidePanelWrapper>
   );
 };

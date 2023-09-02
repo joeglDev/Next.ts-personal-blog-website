@@ -13,11 +13,13 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { lightMode, currentUser } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
-  
+
   const dateTime = new Date(timeStamp);
   const years = dateTime.getFullYear();
-  const months = dateTime.getMonth() < 10 ? `0${dateTime.getMonth()}`: dateTime.getMonth();
-  const days = dateTime.getDay() < 10 ? `0${dateTime.getDay()}`: dateTime.getDay();
+  const months =
+    dateTime.getMonth() < 10 ? `0${dateTime.getMonth()}` : dateTime.getMonth();
+  const days =
+    dateTime.getDay() < 10 ? `0${dateTime.getDay()}` : dateTime.getDay();
   const dateToDisplay = `${years}-${months}-${days}`;
 
   const handleLike = () => {
