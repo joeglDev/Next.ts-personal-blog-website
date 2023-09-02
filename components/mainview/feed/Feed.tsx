@@ -27,7 +27,6 @@ export const Feed = () => {
       ) : (
         <WarningBanner value={noPostsFoundWarning} />
       )}
-      <button>Post</button>
     </FeedWrapper>
   );
 };

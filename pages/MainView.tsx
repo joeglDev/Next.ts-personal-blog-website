@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { context } from "../components/Context";
-import { Statistics } from "../components/mainview/statistics/Statistics";
+import { SidePanel } from "../components/mainview/SidePanel/SidePanel";
 import { Feed } from "../components/mainview/feed/Feed";
 import { NavBar } from "../components/mainview/navbar/NavBar";
 import {
@@ -18,7 +18,7 @@ export default function MainView() {
 
       <MainViewWrapper>
         <MainViewItemWrapper width={25}>
-          <Statistics />
+          <SidePanel />
         </MainViewItemWrapper>
         <MainViewItemWrapper width={75}>
           <Feed />
