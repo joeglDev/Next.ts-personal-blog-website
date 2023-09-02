@@ -13,7 +13,12 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { lightMode, currentUser } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
-  console.log(likes);
+  
+  const dateTime = new Date(timeStamp);
+  const years = dateTime.getFullYear();
+  const months = dateTime.getMonth() < 10 ? `0${dateTime.getMonth()}`: dateTime.getMonth();
+  const days = dateTime.getDay() < 10 ? `0${dateTime.getDay()}`: dateTime.getDay();
+  const dateToDisplay = `${years}-${months}-${days}`;
 
   const handleLike = () => {
     const isFirstLike = !liked;
@@ -35,7 +40,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
       <p>{content}</p>
 
       <BlogPostCardFlex>
-        <p>{timeStamp}</p>
+        <p>{dateToDisplay}</p>
         <LikeButton onClick={handleLike} lightMode={lightMode} liked={liked}>
           <LikesText>{likes.length + likedCount}</LikesText>
         </LikeButton>

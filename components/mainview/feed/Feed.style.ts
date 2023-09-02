@@ -21,7 +21,7 @@ export const BlogPostCardwrapper = styled.article<{ lightMode: Boolean }>`
 
 export const BlogPostCardFlex = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 10vw;
   font-weight: bold;
   overflow-wrap: word-break;
