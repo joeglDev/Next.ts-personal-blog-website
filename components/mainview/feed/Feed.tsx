@@ -7,8 +7,7 @@ import { BlogPostCard } from "./BlogPostCard";
 import { BlogPost } from "./Feed.types";
 
 export const Feed = () => {
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-  const { lightMode } = useContext(context);
+  const { lightMode, blogPosts, setBlogPosts } = useContext(context);
 
   const noPostsFoundWarning = "404 - Cannot retrieve posts.";
 
