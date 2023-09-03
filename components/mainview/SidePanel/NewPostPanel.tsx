@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { ChangeEvent, useContext, useState } from "react";
 import { context } from "../../Context";
 import { NewPostTextArea, NewPostWrapper } from "./NewPostPanel.style";
+import { postNewBlogPostController } from "../../../lib/blog-posts/blogPostController";
 
 export const NewPostPanel = () => {
   const { lightMode, currentUser } = useContext(context);
@@ -12,7 +13,7 @@ export const NewPostPanel = () => {
     setTitle(e.target.value);
   const onContentTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value);
-  const handlePostRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handlePostRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const newBlogPostReqBody = {
       Author: currentUser,
       Title: title,
@@ -20,10 +21,15 @@ export const NewPostPanel = () => {
       Likes: [],
       TimeStamp: new Date().toJSON(),
     };
-    console.log(newBlogPostReqBody);
+
+    const res = await postNewBlogPostController(newBlogPostReqBody);
+    console.log("res top", res);
+    //error handling here
 
     //send
-    //get data back
+    //add res to blogPosts
+    //assign to a blog post context
+    //use this context in feed
   };
   return (
     <NewPostWrapper lightMode={lightMode}>
