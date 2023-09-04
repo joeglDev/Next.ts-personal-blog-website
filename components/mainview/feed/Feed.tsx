@@ -15,7 +15,7 @@ export const Feed = () => {
 
   useEffect(() => {
     blogPostData().then((data) => setBlogPosts(data));
-  }, []);
+  }, [setBlogPosts]);
 
   return (
     <FeedWrapper lightMode={lightMode}>
