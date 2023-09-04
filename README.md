@@ -13,6 +13,13 @@ A personal project replicating a blogging platform for myself. Runs on a separat
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Todo
+- HTTP PUT request to edit an existing blog post
+- error handling for blog post api
+- add likes to api (possible a put req against existing post to add or remove like)
+- user page
+- statistics and hashtags
+
 ## Getting Started
 
 First, run the development server:

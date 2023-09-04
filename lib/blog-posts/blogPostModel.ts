@@ -1,8 +1,10 @@
 import { NewBlogPostReqBody } from "./api.types";
 
+const localhostPort = 3001;
+
 export const getBlogPosts = async () => {
   try {
-    const res = await fetch("http://localhost:5000/api/BlogPost");
+    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost`);
     return await res.json();
   } catch (e) {
     console.log("error", e);
@@ -12,7 +14,7 @@ export const getBlogPosts = async () => {
 
 export const postNewBlogPost = async (req: NewBlogPostReqBody) => {
   try {
-    const res = await fetch("http://localhost:5000/api/BlogPost", {
+    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -25,3 +27,16 @@ export const postNewBlogPost = async (req: NewBlogPostReqBody) => {
     return [];
   }
 };
+
+export const deleteBlogPost = async (id: number) => {
+  try {
+    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost/${id}`, {
+      method: "DELETE",
+    });
+    return await res.json();
+  } catch (e) {
+    console.log("error", e);
+    return [];
+  }
+};
+

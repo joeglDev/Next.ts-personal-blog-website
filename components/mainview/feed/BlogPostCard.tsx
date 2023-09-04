@@ -3,14 +3,15 @@ import { BlogPost } from "./Feed.types";
 import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
 import { context } from "../../Context";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
+import { deleteBlogPostController } from "../../../lib/blog-posts/blogPostController";
 
 interface BlogPostCardProps {
   post: BlogPost;
 }
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
-  const { title, likes, author, content, timeStamp } = post;
-  const { lightMode, currentUser } = useContext(context);
+  const { title, likes, author, content, timeStamp, id } = post;
+  const { lightMode, currentUser, blogPosts, setBlogPosts } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
 
@@ -36,6 +37,12 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     setLiked(!liked);
   };
 
+  const handleDeletePost = async (id: number) => {
+    const res = await deleteBlogPostController(id);
+    const newPosts = blogPosts.filter((post) => post.id !== id);
+    setBlogPosts(newPosts);
+  }
+
   return (
     <BlogPostCardwrapper lightMode={lightMode}>
       <h2>{title}</h2>
@@ -47,7 +54,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
           <LikesText>{likes.length + likedCount}</LikesText>
         </LikeButton>
         <p>{author}</p> {/*link to author bio */}
-        {author === currentUser ? <button>delete post</button> : null}
+        {author === currentUser ? <button onClick={() => handleDeletePost(id)}>delete post</button> : null}
       </BlogPostCardFlex>
     </BlogPostCardwrapper>
   );
