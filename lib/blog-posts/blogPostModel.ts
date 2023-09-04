@@ -30,13 +30,15 @@ export const postNewBlogPost = async (req: NewBlogPostReqBody) => {
 
 export const deleteBlogPost = async (id: number) => {
   try {
-    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost/${id}`, {
-      method: "DELETE",
-    });
+    const res = await fetch(
+      `http://localhost:${localhostPort}/api/BlogPost/${id}`,
+      {
+        method: "DELETE",
+      },
+    );
     return await res.json();
   } catch (e) {
     console.log("error", e);
     return [];
   }
 };
-

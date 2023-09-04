@@ -13,5 +13,5 @@ export const postNewBlogPostController = async (req: NewBlogPostReqBody) => {
 
 export const deleteBlogPostController = async (id: number) => {
   const res = await deleteBlogPost(id);
-  return res
-}
+  return res;
+};
