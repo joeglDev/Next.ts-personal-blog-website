@@ -22,7 +22,7 @@ export const BlogPostCardwrapper = styled.article<{ lightMode: Boolean }>`
 export const BlogPostCardFlex = styled.div`
   display: flex;
   justify-content: center;
-  gap: 10vw;
+  gap: 5vw;
   font-weight: bold;
   overflow-wrap: word-break;
 `;

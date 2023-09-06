@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { BlogPost } from "./Feed.types";
 import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
 import { context } from "../../Context";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
 import { deleteBlogPostController } from "../../../lib/blog-posts/blogPostController";
+import { PostButton } from "../SidePanel/NewPostPanel.style";
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -56,7 +57,14 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
         </LikeButton>
         <p>{author}</p> {/*link to author bio */}
         {author === currentUser ? (
-          <button onClick={() => handleDeletePost(id)}>delete post</button>
+          <Fragment>
+            <PostButton onClick={() => handleDeletePost(id)}>
+              Delete post
+            </PostButton>
+            <PostButton onClick={() => handleDeletePost(id)}>
+              Edit post
+            </PostButton>
+          </Fragment>
         ) : null}
       </BlogPostCardFlex>
     </BlogPostCardwrapper>

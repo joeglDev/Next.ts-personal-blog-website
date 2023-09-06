@@ -1,13 +1,26 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { context } from "../../Context";
-import { NewPostTextArea, NewPostWrapper } from "./NewPostPanel.style";
+import {
+  PostButton,
+  NewPostTextArea,
+  NewPostWrapper,
+} from "./NewPostPanel.style";
 import { postNewBlogPostController } from "../../../lib/blog-posts/blogPostController";
+import { WarningBanner } from "../../WarningBanner";
+
+/*
+Todo: edit a post
+1. on click of edit button assign post to context
+2. If context !null then setEditMode(true) and swap post button for edit button
+3. this makes a api request to PUT
+*/
 
 export const NewPostPanel = () => {
   const { lightMode, currentUser, blogPosts, setBlogPosts } =
     useContext(context);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+  const [emptyWarning, setEmptyWarning] = useState(false);
 
   const onTitleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setTitle(e.target.value);
@@ -16,25 +29,31 @@ export const NewPostPanel = () => {
   const handlePostRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const newBlogPostReqBody = {
-      Author: currentUser,
-      Title: title,
-      Content: content,
-      Likes: [],
-      TimeStamp: new Date().toJSON(),
-    };
+    if (content.length && title.length) {
+      setEmptyWarning(false);
 
-    const res = await postNewBlogPostController(newBlogPostReqBody);
-    const allBlogPosts = blogPosts.concat(res);
-    setBlogPosts(allBlogPosts);
-    
-    const form = document.getElementById('post-form') as HTMLFormElement;
-    form.reset();
-    //error handling here
+      const newBlogPostReqBody = {
+        Author: currentUser,
+        Title: title,
+        Content: content,
+        Likes: [],
+        TimeStamp: new Date().toJSON(),
+      };
+
+      const res = await postNewBlogPostController(newBlogPostReqBody);
+      const allBlogPosts = blogPosts.concat(res);
+      setBlogPosts(allBlogPosts);
+
+      const form = document.getElementById("post-form") as HTMLFormElement;
+      form.reset();
+      //error handling here
+    } else {
+      setEmptyWarning(true);
+    }
   };
 
   return (
-    <NewPostWrapper id='post-form' lightMode={lightMode}>
+    <NewPostWrapper id="post-form" lightMode={lightMode}>
       <NewPostTextArea
         placeholder="Title:"
         aria-label="new blog post title input"
@@ -45,7 +64,10 @@ export const NewPostPanel = () => {
         aria-label="new blog post content input"
         onChange={(e) => onContentTextAreaChange(e)}
       />
-      <button onClick={(e) => handlePostRequest(e)}>Post</button>
+      {emptyWarning ? (
+        <WarningBanner value="Please enter a value for title and content" />
+      ) : null}
+      <PostButton onClick={(e) => handlePostRequest(e)}>Post</PostButton>
     </NewPostWrapper>
   );
 };

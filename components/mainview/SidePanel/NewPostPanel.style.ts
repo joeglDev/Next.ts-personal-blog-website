@@ -19,3 +19,14 @@ export const NewPostWrapper = styled.form<{ lightMode: Boolean }>`
 export const NewPostTextArea = styled.textarea`
   width: 90%;
 `;
+
+export const PostButton = styled.button`
+  width: 8vw;
+  height: 6vh;
+  font-weight: bold;
+  border: none;
+
+  &:hover {
+    background-color: ${COLOURS.highlightBlue};
+  }
+`;
