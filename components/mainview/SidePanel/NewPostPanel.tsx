@@ -14,6 +14,8 @@ export const NewPostPanel = () => {
   const onContentTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value);
   const handlePostRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
     const newBlogPostReqBody = {
       Author: currentUser,
       Title: title,
@@ -25,11 +27,14 @@ export const NewPostPanel = () => {
     const res = await postNewBlogPostController(newBlogPostReqBody);
     const allBlogPosts = blogPosts.concat(res);
     setBlogPosts(allBlogPosts);
+    
+    const form = document.getElementById('post-form') as HTMLFormElement;
+    form.reset();
     //error handling here
   };
 
   return (
-    <NewPostWrapper lightMode={lightMode}>
+    <NewPostWrapper id='post-form' lightMode={lightMode}>
       <NewPostTextArea
         placeholder="Title:"
         aria-label="new blog post title input"

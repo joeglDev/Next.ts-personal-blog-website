@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { COLOURS } from "../../../globals/colours";
 
-export const NewPostWrapper = styled.article<{ lightMode: Boolean }>`
+export const NewPostWrapper = styled.form<{ lightMode: Boolean }>`
   padding: 2vh;
   display: flex;
   align-items: center;
