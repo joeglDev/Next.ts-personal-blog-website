@@ -1,4 +1,4 @@
-import { NewBlogPostReqBody } from "./api.types";
+import { EditBlogPostReqBody, NewBlogPostReqBody } from "./api.types";
 
 const localhostPort = 3001;
 
@@ -42,3 +42,22 @@ export const deleteBlogPost = async (id: number) => {
     return [];
   }
 };
+
+export const patchBlogPost = async (req: EditBlogPostReqBody) => {
+  try {
+    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost/${req.Id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req),
+    });
+
+      return {status: res.status, content: req}
+
+  } catch (e) {
+    console.log("error", e);
+    return {status: 500, error: e};
+  }
+};
+

@@ -6,6 +6,10 @@ export interface NewBlogPostReqBody {
   TimeStamp: string;
 }
 
+export interface EditBlogPostReqBody extends NewBlogPostReqBody {
+  Id: number,
+}
+
 export interface LikedByItem {
   Id: number;
   UserName: string;

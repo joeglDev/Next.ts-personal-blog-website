@@ -5,8 +5,10 @@ import {
   NewPostTextArea,
   NewPostWrapper,
 } from "./NewPostPanel.style";
-import { postNewBlogPostController } from "../../../lib/blog-posts/blogPostController";
+import { patchBlogPostController, postNewBlogPostController } from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
+import { BlogPost } from "../feed/Feed.types";
+import { LikedByItem } from "../../../lib/blog-posts/api.types";
 
 /*
 Todo: edit a post
@@ -60,9 +62,26 @@ export const NewPostPanel = () => {
     }
   };
 
-  const handleEditRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleEditRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setEditBlogPost(null);
+    const mappedLikes: LikedByItem[] = editBlogPost!.likes.map((like) => {
+      return {Id: like.id, UserName: like.username}
+    })
+
+    const editBlogPostReqBody = {
+      Id: editBlogPost!.id,
+      Author: editBlogPost!.author,
+      Title: title,
+      Content: content,
+      Likes: mappedLikes,
+      TimeStamp: editBlogPost!.timeStamp,
+    };
+
+    const res = await patchBlogPostController(editBlogPostReqBody);
+
+    if (res.status === 204) {
+      setEditBlogPost(null);
+    }
   };
 
   useEffect(() => {

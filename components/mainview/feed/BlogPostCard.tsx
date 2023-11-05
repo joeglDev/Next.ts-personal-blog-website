@@ -51,17 +51,9 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     setBlogPosts(newPosts);
   };
 
-  const handleEditPost = async (id: number) => {
-    //make be request
-    // const res = await patchBlogPostController(id);
-    //console.log(res)
-    //update fe optmistically
-  };
-
   const editPost = (id: number) => {
     const post = blogPosts.filter((post) => post.id === id);
     setEditBlogPost(post[0]);
-    //send edited text back
   };
 
   return (
