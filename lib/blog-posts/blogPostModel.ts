@@ -45,19 +45,20 @@ export const deleteBlogPost = async (id: number) => {
 
 export const patchBlogPost = async (req: EditBlogPostReqBody) => {
   try {
-    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost/${req.Id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `http://localhost:${localhostPort}/api/BlogPost/${req.Id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
       },
-      body: JSON.stringify(req),
-    });
+    );
 
-      return {status: res.status, content: req}
-
+    return { status: res.status, content: req };
   } catch (e) {
     console.log("error", e);
-    return {status: 500, error: e};
+    return { status: 500, error: e };
   }
 };
-

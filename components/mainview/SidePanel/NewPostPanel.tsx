@@ -5,9 +5,11 @@ import {
   NewPostTextArea,
   NewPostWrapper,
 } from "./NewPostPanel.style";
-import { patchBlogPostController, postNewBlogPostController } from "../../../lib/blog-posts/blogPostController";
+import {
+  patchBlogPostController,
+  postNewBlogPostController,
+} from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
-import { BlogPost } from "../feed/Feed.types";
 import { LikedByItem } from "../../../lib/blog-posts/api.types";
 
 /*
@@ -25,6 +27,7 @@ export const NewPostPanel = () => {
     setBlogPosts,
     editBlogPost,
     setEditBlogPost,
+    setNewlyEditedBlogPost,
   } = useContext(context);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
@@ -65,8 +68,8 @@ export const NewPostPanel = () => {
   const handleEditRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const mappedLikes: LikedByItem[] = editBlogPost!.likes.map((like) => {
-      return {Id: like.id, UserName: like.username}
-    })
+      return { Id: like.id, UserName: like.username };
+    });
 
     const editBlogPostReqBody = {
       Id: editBlogPost!.id,
@@ -81,6 +84,7 @@ export const NewPostPanel = () => {
 
     if (res.status === 204) {
       setEditBlogPost(null);
+      setNewlyEditedBlogPost(editBlogPostReqBody);
     }
   };
 

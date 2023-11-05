@@ -1,5 +1,5 @@
-import { Fragment, useContext, useState } from "react";
-import { BlogPost } from "./Feed.types";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { BlogPost, LikeItem } from "./Feed.types";
 import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
 import { context } from "../../Context";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
@@ -18,7 +18,8 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     blogPosts,
     setBlogPosts,
     setEditBlogPost,
-    editBlogPost,
+    newlyEditedBlogPost,
+    setNewlyEditedBlogPost,
   } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
@@ -55,6 +56,30 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     const post = blogPosts.filter((post) => post.id === id);
     setEditBlogPost(post[0]);
   };
+
+  useEffect(() => {
+    if (newlyEditedBlogPost) {
+      const mappedLikes: LikeItem[] = newlyEditedBlogPost!.Likes.map((like) => {
+        return { id: like.Id, username: like.UserName };
+      });
+
+      const newPosts = blogPosts.map((post) => {
+        if (post.id === newlyEditedBlogPost.Id) {
+          const editedPost: BlogPost = {
+            id: newlyEditedBlogPost.Id,
+            title: newlyEditedBlogPost.Title,
+            author: newlyEditedBlogPost.Author!,
+            content: newlyEditedBlogPost.Content,
+            likes: mappedLikes,
+            timeStamp: newlyEditedBlogPost.TimeStamp,
+          };
+          return editedPost;
+        } else return post;
+      });
+      setBlogPosts(newPosts);
+      setNewlyEditedBlogPost(null);
+    }
+  }, [newlyEditedBlogPost]);
 
   return (
     <BlogPostCardwrapper lightMode={lightMode}>

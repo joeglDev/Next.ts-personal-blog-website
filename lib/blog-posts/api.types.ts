@@ -7,7 +7,7 @@ export interface NewBlogPostReqBody {
 }
 
 export interface EditBlogPostReqBody extends NewBlogPostReqBody {
-  Id: number,
+  Id: number;
 }
 
 export interface LikedByItem {
