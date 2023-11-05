@@ -1,12 +1,16 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { context } from "../../Context";
 import {
   PostButton,
   NewPostTextArea,
   NewPostWrapper,
 } from "./NewPostPanel.style";
-import { postNewBlogPostController } from "../../../lib/blog-posts/blogPostController";
+import {
+  patchBlogPostController,
+  postNewBlogPostController,
+} from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
+import { LikedByItem } from "../../../lib/blog-posts/api.types";
 
 /*
 Todo: edit a post
@@ -16,16 +20,25 @@ Todo: edit a post
 */
 
 export const NewPostPanel = () => {
-  const { lightMode, currentUser, blogPosts, setBlogPosts } =
-    useContext(context);
+  const {
+    lightMode,
+    currentUser,
+    blogPosts,
+    setBlogPosts,
+    editBlogPost,
+    setEditBlogPost,
+    setNewlyEditedBlogPost,
+  } = useContext(context);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [emptyWarning, setEmptyWarning] = useState(false);
 
   const onTitleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setTitle(e.target.value);
+
   const onContentTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value);
+
   const handlePostRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -52,22 +65,56 @@ export const NewPostPanel = () => {
     }
   };
 
+  const handleEditRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const mappedLikes: LikedByItem[] = editBlogPost!.likes.map((like) => {
+      return { Id: like.id, UserName: like.username };
+    });
+
+    const editBlogPostReqBody = {
+      Id: editBlogPost!.id,
+      Author: editBlogPost!.author,
+      Title: title,
+      Content: content,
+      Likes: mappedLikes,
+      TimeStamp: editBlogPost!.timeStamp,
+    };
+
+    const res = await patchBlogPostController(editBlogPostReqBody);
+
+    if (res.status === 204) {
+      setEditBlogPost(null);
+      setNewlyEditedBlogPost(editBlogPostReqBody);
+    }
+  };
+
+  useEffect(() => {
+    setContent(editBlogPost ? editBlogPost.content : "");
+    setTitle(editBlogPost ? editBlogPost.title : "");
+  }, [editBlogPost]);
+
   return (
     <NewPostWrapper id="post-form" lightMode={lightMode}>
       <NewPostTextArea
         placeholder="Title:"
         aria-label="new blog post title input"
         onChange={(e) => onTitleTextAreaChange(e)}
+        defaultValue={title}
       />
       <NewPostTextArea
         placeholder="Your post content here:"
         aria-label="new blog post content input"
         onChange={(e) => onContentTextAreaChange(e)}
+        defaultValue={content}
       />
       {emptyWarning ? (
         <WarningBanner value="Please enter a value for title and content" />
       ) : null}
-      <PostButton onClick={(e) => handlePostRequest(e)}>Post</PostButton>
+      {editBlogPost ? (
+        <PostButton onClick={(e) => handleEditRequest(e)}>Edit</PostButton>
+      ) : (
+        <PostButton onClick={(e) => handlePostRequest(e)}>Post</PostButton>
+      )}
     </NewPostWrapper>
   );
 };

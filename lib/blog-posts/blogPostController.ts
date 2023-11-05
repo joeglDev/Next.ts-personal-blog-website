@@ -1,5 +1,10 @@
-import { NewBlogPostReqBody } from "./api.types";
-import { deleteBlogPost, getBlogPosts, postNewBlogPost } from "./blogPostModel";
+import { EditBlogPostReqBody, NewBlogPostReqBody } from "./api.types";
+import {
+  deleteBlogPost,
+  getBlogPosts,
+  postNewBlogPost,
+  patchBlogPost,
+} from "./blogPostModel";
 
 export const getBlogPostServerProps = async () => {
   const res = await getBlogPosts();
@@ -13,5 +18,10 @@ export const postNewBlogPostController = async (req: NewBlogPostReqBody) => {
 
 export const deleteBlogPostController = async (id: number) => {
   const res = await deleteBlogPost(id);
+  return res;
+};
+
+export const patchBlogPostController = async (newPost: EditBlogPostReqBody) => {
+  const res = await patchBlogPost(newPost);
   return res;
 };

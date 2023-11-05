@@ -1,4 +1,4 @@
-interface LikeItem {
+export interface LikeItem {
   //add user id instead of username when login is added
   id: number;
   username: string;

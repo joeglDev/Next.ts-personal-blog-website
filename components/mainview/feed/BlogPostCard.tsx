@@ -1,5 +1,5 @@
-import { Fragment, useContext, useState } from "react";
-import { BlogPost } from "./Feed.types";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { BlogPost, LikeItem } from "./Feed.types";
 import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
 import { context } from "../../Context";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
@@ -12,8 +12,15 @@ interface BlogPostCardProps {
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { title, likes, author, content, timeStamp, id } = post;
-  const { lightMode, currentUser, blogPosts, setBlogPosts } =
-    useContext(context);
+  const {
+    lightMode,
+    currentUser,
+    blogPosts,
+    setBlogPosts,
+    setEditBlogPost,
+    newlyEditedBlogPost,
+    setNewlyEditedBlogPost,
+  } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
 
@@ -45,6 +52,35 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     setBlogPosts(newPosts);
   };
 
+  const editPost = (id: number) => {
+    const post = blogPosts.filter((post) => post.id === id);
+    setEditBlogPost(post[0]);
+  };
+
+  useEffect(() => {
+    if (newlyEditedBlogPost) {
+      const mappedLikes: LikeItem[] = newlyEditedBlogPost!.Likes.map((like) => {
+        return { id: like.Id, username: like.UserName };
+      });
+
+      const newPosts = blogPosts.map((post) => {
+        if (post.id === newlyEditedBlogPost.Id) {
+          const editedPost: BlogPost = {
+            id: newlyEditedBlogPost.Id,
+            title: newlyEditedBlogPost.Title,
+            author: newlyEditedBlogPost.Author!,
+            content: newlyEditedBlogPost.Content,
+            likes: mappedLikes,
+            timeStamp: newlyEditedBlogPost.TimeStamp,
+          };
+          return editedPost;
+        } else return post;
+      });
+      setBlogPosts(newPosts);
+      setNewlyEditedBlogPost(null);
+    }
+  }, [newlyEditedBlogPost]);
+
   return (
     <BlogPostCardwrapper lightMode={lightMode}>
       <h2>{title}</h2>
@@ -61,9 +97,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             <PostButton onClick={() => handleDeletePost(id)}>
               Delete post
             </PostButton>
-            <PostButton onClick={() => handleDeletePost(id)}>
-              Edit post
-            </PostButton>
+            <PostButton onClick={() => editPost(id)}>Edit post</PostButton>
           </Fragment>
         ) : null}
       </BlogPostCardFlex>
