@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { context } from "../../Context";
 import {
   PostButton,
@@ -16,16 +16,24 @@ Todo: edit a post
 */
 
 export const NewPostPanel = () => {
-  const { lightMode, currentUser, blogPosts, setBlogPosts } =
-    useContext(context);
+  const {
+    lightMode,
+    currentUser,
+    blogPosts,
+    setBlogPosts,
+    editBlogPost,
+    setEditBlogPost,
+  } = useContext(context);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [emptyWarning, setEmptyWarning] = useState(false);
 
   const onTitleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setTitle(e.target.value);
+
   const onContentTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setContent(e.target.value);
+
   const handlePostRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -52,22 +60,38 @@ export const NewPostPanel = () => {
     }
   };
 
+  const handleEditRequest = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setEditBlogPost(null);
+  };
+
+  useEffect(() => {
+    setContent(editBlogPost ? editBlogPost.content : "");
+    setTitle(editBlogPost ? editBlogPost.title : "");
+  }, [editBlogPost]);
+
   return (
     <NewPostWrapper id="post-form" lightMode={lightMode}>
       <NewPostTextArea
         placeholder="Title:"
         aria-label="new blog post title input"
         onChange={(e) => onTitleTextAreaChange(e)}
+        defaultValue={title}
       />
       <NewPostTextArea
         placeholder="Your post content here:"
         aria-label="new blog post content input"
         onChange={(e) => onContentTextAreaChange(e)}
+        defaultValue={content}
       />
       {emptyWarning ? (
         <WarningBanner value="Please enter a value for title and content" />
       ) : null}
-      <PostButton onClick={(e) => handlePostRequest(e)}>Post</PostButton>
+      {editBlogPost ? (
+        <PostButton onClick={(e) => handleEditRequest(e)}>Edit</PostButton>
+      ) : (
+        <PostButton onClick={(e) => handlePostRequest(e)}>Post</PostButton>
+      )}
     </NewPostWrapper>
   );
 };

@@ -1,6 +1,6 @@
 import { NewBlogPostReqBody } from "./api.types";
 
-const localhostPort = 5000;
+const localhostPort = 3001;
 
 export const getBlogPosts = async () => {
   try {

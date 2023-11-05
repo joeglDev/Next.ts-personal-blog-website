@@ -12,8 +12,14 @@ interface BlogPostCardProps {
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { title, likes, author, content, timeStamp, id } = post;
-  const { lightMode, currentUser, blogPosts, setBlogPosts } =
-    useContext(context);
+  const {
+    lightMode,
+    currentUser,
+    blogPosts,
+    setBlogPosts,
+    setEditBlogPost,
+    editBlogPost,
+  } = useContext(context);
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
 
@@ -45,6 +51,19 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     setBlogPosts(newPosts);
   };
 
+  const handleEditPost = async (id: number) => {
+    //make be request
+    // const res = await patchBlogPostController(id);
+    //console.log(res)
+    //update fe optmistically
+  };
+
+  const editPost = (id: number) => {
+    const post = blogPosts.filter((post) => post.id === id);
+    setEditBlogPost(post[0]);
+    //send edited text back
+  };
+
   return (
     <BlogPostCardwrapper lightMode={lightMode}>
       <h2>{title}</h2>
@@ -61,9 +80,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             <PostButton onClick={() => handleDeletePost(id)}>
               Delete post
             </PostButton>
-            <PostButton onClick={() => handleDeletePost(id)}>
-              Edit post
-            </PostButton>
+            <PostButton onClick={() => editPost(id)}>Edit post</PostButton>
           </Fragment>
         ) : null}
       </BlogPostCardFlex>

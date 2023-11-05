@@ -15,3 +15,10 @@ export const deleteBlogPostController = async (id: number) => {
   const res = await deleteBlogPost(id);
   return res;
 };
+
+/*
+export const patchBlogPostController = async (id: number, newPost:) => {
+  const res = await patchBlogPostController(id, newPost);
+  return res
+}
+*/

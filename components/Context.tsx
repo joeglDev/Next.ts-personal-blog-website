@@ -8,6 +8,8 @@ interface defaultValueInterface {
   setCurrentUser: (value: string | null) => void;
   blogPosts: BlogPost[];
   setBlogPosts: (value: BlogPost[]) => void;
+  editBlogPost: BlogPost | null;
+  setEditBlogPost: (value: BlogPost | null) => void;
 }
 
 const defaultValue: defaultValueInterface = {
@@ -17,6 +19,8 @@ const defaultValue: defaultValueInterface = {
   setCurrentUser: () => {},
   blogPosts: [],
   setBlogPosts: () => {},
+  editBlogPost: null,
+  setEditBlogPost: () => {},
 };
 
 export const context = createContext(defaultValue);
@@ -25,6 +29,9 @@ export const ContextProvider = (props: PropsWithChildren) => {
   const [lightMode, setLightMode] = useState(defaultValue.lightMode);
   const [currentUser, setCurrentUser] = useState(defaultValue.currentUser);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [editBlogPost, setEditBlogPost] = useState<BlogPost | null>(
+    defaultValue.editBlogPost,
+  );
 
   return (
     <context.Provider
@@ -35,6 +42,8 @@ export const ContextProvider = (props: PropsWithChildren) => {
         setCurrentUser,
         blogPosts,
         setBlogPosts,
+        editBlogPost,
+        setEditBlogPost,
       }}
     >
       {props.children}
