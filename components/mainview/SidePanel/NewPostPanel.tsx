@@ -83,7 +83,7 @@ export const NewPostPanel = () => {
 
     const res = await patchBlogPostController(editBlogPostReqBody);
 
-    if (res.status === 204) {
+    if (res.status === 200) {
       setEditBlogPost(null);
       setNewlyEditedBlogPost(editBlogPostReqBody);
     }
