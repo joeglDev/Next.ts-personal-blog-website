@@ -10,7 +10,6 @@ import {
   postNewBlogPostController,
 } from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
-import { LikedByItem } from "../../../lib/blog-posts/api.types";
 
 /*
 Todo: edit a post
@@ -49,7 +48,7 @@ export const NewPostPanel = () => {
         Author: currentUser,
         Title: title,
         Content: content,
-        Likes: [],
+        Likes: 0,
         TimeStamp: new Date().toJSON(),
       };
 
@@ -67,16 +66,18 @@ export const NewPostPanel = () => {
 
   const handleEditRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    /*
     const mappedLikes: LikedByItem[] = editBlogPost!.likes.map((like) => {
       return { Id: like.id, UserName: like.username };
     });
+    */
 
     const editBlogPostReqBody = {
       Id: editBlogPost!.id,
       Author: editBlogPost!.author,
       Title: title,
       Content: content,
-      Likes: mappedLikes,
+      Likes: editBlogPost!.likes,
       TimeStamp: editBlogPost!.timeStamp,
     };
 

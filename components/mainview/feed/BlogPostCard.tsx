@@ -59,9 +59,11 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   useEffect(() => {
     if (newlyEditedBlogPost) {
+      /*
       const mappedLikes: LikeItem[] = newlyEditedBlogPost!.Likes.map((like) => {
         return { id: like.Id, username: like.UserName };
       });
+      */
 
       const newPosts = blogPosts.map((post) => {
         if (post.id === newlyEditedBlogPost.Id) {
@@ -70,7 +72,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             title: newlyEditedBlogPost.Title,
             author: newlyEditedBlogPost.Author!,
             content: newlyEditedBlogPost.Content,
-            likes: mappedLikes,
+            likes: likes,
             timeStamp: newlyEditedBlogPost.TimeStamp,
           };
           return editedPost;
@@ -89,7 +91,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
       <BlogPostCardFlex>
         <p>{dateToDisplay}</p>
         <LikeButton onClick={handleLike} lightMode={lightMode} liked={liked}>
-          <LikesText>{likes.length + likedCount}</LikesText>
+          <LikesText>{likes + likedCount}</LikesText>
         </LikeButton>
         <p>{author}</p> {/*link to author bio */}
         {author === currentUser ? (

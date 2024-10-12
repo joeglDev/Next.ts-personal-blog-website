@@ -1,10 +1,10 @@
 import { EditBlogPostReqBody, NewBlogPostReqBody } from "./api.types";
 
-const localhostPort = 3001;
+const localhostPort = 5181;
 
 export const getBlogPosts = async () => {
   try {
-    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost`);
+    const res = await fetch(`http://localhost:${localhostPort}/api/posts`);
     return await res.json();
   } catch (e) {
     console.log("error", e);
@@ -14,7 +14,7 @@ export const getBlogPosts = async () => {
 
 export const postNewBlogPost = async (req: NewBlogPostReqBody) => {
   try {
-    const res = await fetch(`http://localhost:${localhostPort}/api/BlogPost`, {
+    const res = await fetch(`http://localhost:${localhostPort}/api/post`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const postNewBlogPost = async (req: NewBlogPostReqBody) => {
 export const deleteBlogPost = async (id: number) => {
   try {
     const res = await fetch(
-      `http://localhost:${localhostPort}/api/BlogPost/${id}`,
+      `http://localhost:${localhostPort}/api/post/${id}`,
       {
         method: "DELETE",
       },
@@ -46,9 +46,9 @@ export const deleteBlogPost = async (id: number) => {
 export const patchBlogPost = async (req: EditBlogPostReqBody) => {
   try {
     const res = await fetch(
-      `http://localhost:${localhostPort}/api/BlogPost/${req.Id}`,
+      `http://localhost:${localhostPort}/api/post/${req.Id}`,
       {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },

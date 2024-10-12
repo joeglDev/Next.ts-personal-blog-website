@@ -2,7 +2,7 @@ export interface NewBlogPostReqBody {
   Author: string | null;
   Title: string;
   Content: string;
-  Likes: LikedByItem[];
+  Likes:  number;//LikedByItem[];
   TimeStamp: string;
 }
 

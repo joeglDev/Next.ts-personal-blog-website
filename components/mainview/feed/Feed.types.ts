@@ -9,6 +9,6 @@ export interface BlogPost {
   author: string;
   title: string;
   content: string;
-  likes: LikeItem[];
+  likes: number; // LikesByItem;
   timeStamp: string;
 }
