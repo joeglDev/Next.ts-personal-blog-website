@@ -3,7 +3,7 @@ import { getBlogPostServerProps } from "../../../lib/blog-posts/blogPostControll
 import { WarningBanner } from "../../WarningBanner";
 import { FeedWrapper } from "./Feed.style";
 import { context } from "../../Context";
-import { BlogPostCard } from "./BlogPostCard";
+import { BlogPostCard } from "./blogpostCard/BlogPostCard";
 import { BlogPost } from "./Feed.types";
 
 export const Feed = () => {

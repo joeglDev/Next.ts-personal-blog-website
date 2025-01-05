@@ -1,17 +1,18 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import { BlogPost, LikeItem } from "./Feed.types";
-import { BlogPostCardFlex, BlogPostCardwrapper } from "./Feed.style";
-import { context } from "../../Context";
+import { BlogPost, LikeItem } from "../Feed.types";
+import { BlogPostCardFlex, BlogPostCardWrapper } from "../Feed.style";
+import { context } from "../../../Context";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
-import { deleteBlogPostController } from "../../../lib/blog-posts/blogPostController";
-import { PostButton } from "../SidePanel/NewPostPanel.style";
+import { deleteBlogPostController } from "../../../../lib/blog-posts/blogPostController";
+import { PostButton } from "../../SidePanel/NewPostPanel.style";
+import { BlogpostImageContainer } from "../blogpostImageContainer/BlogpostImageContainer";
 
 interface BlogPostCardProps {
   post: BlogPost;
 }
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
-  const { title, likes, author, content, timeStamp, id } = post;
+  const { title, likes, author, content, timeStamp, id: blogpostId } = post;
   const {
     lightMode,
     currentUser,
@@ -27,9 +28,11 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const dateTime = new Date(timeStamp);
   const years = dateTime.getFullYear();
   const months =
-    dateTime.getMonth() < 10 ? `0${dateTime.getMonth()}` : dateTime.getMonth();
+    dateTime.getMonth() < 10
+      ? `0${dateTime.getMonth() + 1}`
+      : dateTime.getMonth() + 1;
   const days =
-    dateTime.getDay() < 10 ? `0${dateTime.getDay()}` : dateTime.getDay();
+    dateTime.getDate() < 10 ? `0${dateTime.getDate()}` : dateTime.getDate();
   const dateToDisplay = `${years}-${months}-${days}`;
 
   const handleLike = () => {
@@ -81,12 +84,14 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
       setBlogPosts(newPosts);
       setNewlyEditedBlogPost(null);
     }
-  }, [newlyEditedBlogPost]);
+  }, [newlyEditedBlogPost, blogPosts, setBlogPosts]);
 
   return (
-    <BlogPostCardwrapper lightMode={lightMode}>
+    <BlogPostCardWrapper lightMode={lightMode}>
       <h2>{title}</h2>
       <p>{content}</p>
+
+      <BlogpostImageContainer blogpostId={blogpostId} />
 
       <BlogPostCardFlex>
         <p>{dateToDisplay}</p>
@@ -96,13 +101,15 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
         <p>{author}</p> {/*link to author bio */}
         {author === currentUser ? (
           <Fragment>
-            <PostButton onClick={() => handleDeletePost(id)}>
+            <PostButton onClick={() => handleDeletePost(blogpostId)}>
               Delete post
             </PostButton>
-            <PostButton onClick={() => editPost(id)}>Edit post</PostButton>
+            <PostButton onClick={() => editPost(blogpostId)}>
+              Edit post
+            </PostButton>
           </Fragment>
         ) : null}
       </BlogPostCardFlex>
-    </BlogPostCardwrapper>
+    </BlogPostCardWrapper>
   );
 };

@@ -8,7 +8,9 @@ export const FeedWrapper = styled.section<{ lightMode: boolean }>`
     p.lightMode ? COLOURS.light.cardBackground : COLOURS.dark.cardBackground};
 `;
 
-export const BlogPostCardwrapper = styled.article<{ lightMode: Boolean }>`
+export const BlogPostCardWrapper = styled.article<{ lightMode: Boolean }>`
+  max-width: 50vw;
+  max-font-size: 5vh;
   margin: 5vh auto 5vh auto;
   padding: 5vh;
   background-color: ${(p) =>

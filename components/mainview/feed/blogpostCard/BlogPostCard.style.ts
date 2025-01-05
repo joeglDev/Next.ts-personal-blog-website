@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { COLOURS } from "../../../globals/colours";
+import { COLOURS } from "../../../../globals/colours";
 
 const heartSize = 5;
 
@@ -25,7 +25,6 @@ export const LikeButton = styled.button<{ lightMode: boolean; liked: boolean }>`
     border-radius: ${heartSize * 0.5}rem ${heartSize * 0.5}rem 0 0;
     background: ${(p) =>
       p.liked ? COLOURS.highlightPink : COLOURS.highlightBlue};
-    left: 0.5remx;
     transform: rotate(-45deg);
     transform-origin: 0 100%;
   }
