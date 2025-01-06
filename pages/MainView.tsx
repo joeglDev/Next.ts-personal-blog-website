@@ -15,7 +15,6 @@ export default function MainView() {
   return (
     <ThemeContainer lightMode={lightMode}>
       <NavBar />
-
       <MainViewWrapper>
         <MainViewItemWrapper width={25}>
           <SidePanel />
@@ -25,10 +24,5 @@ export default function MainView() {
         </MainViewItemWrapper>
       </MainViewWrapper>
     </ThemeContainer>
-    // navigation (id needed long term)
-
-    // view of mapped cards
-
-    //  sussinct ypur profile and add a thought box
   );
 }
