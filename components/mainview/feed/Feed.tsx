@@ -1,21 +1,21 @@
-import { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useReducer, useState} from "react";
 import { getBlogPostServerProps } from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
 import { FeedWrapper } from "./Feed.style";
 import { context } from "../../Context";
 import { BlogPostCard } from "./blogpostCard/BlogPostCard";
 import { BlogPost } from "./Feed.types";
+import {blogPostsReducer} from "../../BlogPostsReducer";
 
-export const Feed = () => {
-  const { lightMode, blogPosts, setBlogPosts } = useContext(context);
+interface FeedProps {
+  blogPosts: BlogPost[];
+}
 
+export const Feed = ({blogPosts}: FeedProps) => {
+  const { lightMode } = useContext(context);
+
+  // TODO: abstract
   const noPostsFoundWarning = "404 - Cannot retrieve posts.";
-
-  const blogPostData = async () => await getBlogPostServerProps();
-
-  useEffect(() => {
-    blogPostData().then((data) => setBlogPosts(data));
-  }, [setBlogPosts]);
 
   return (
     <FeedWrapper lightMode={lightMode}>
