@@ -8,7 +8,7 @@ import {
   MainViewItemWrapper,
   MainViewWrapper,
 } from "../components/mainview/MainView.style";
-import {blogPostsReducer} from "../components/BlogPostsReducer";
+import {ActionTypes, blogPostsReducer} from "../components/BlogPostsReducer";
 import {getBlogPostServerProps} from "../lib/blog-posts/blogPostController";
 
 export default function MainView() {
@@ -20,7 +20,7 @@ export default function MainView() {
       const fetchBlogPosts = async () => {
             try {
                 const data = await getBlogPostServerProps();
-                dispatch({ type: "SET_BLOG_POSTS", blogPosts: [...data] });
+                dispatch({ type: ActionTypes.SET_BLOG_POST, blogPosts: [...data] });
             } catch (error) {
                 console.error("Failed to fetch blog posts:", error);
             }
