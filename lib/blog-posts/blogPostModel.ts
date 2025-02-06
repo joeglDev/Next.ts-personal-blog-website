@@ -4,7 +4,10 @@ const localhostPort = 5000;
 
 export const getBlogPosts = async () => {
   try {
-    const res = await fetch(`http://localhost:${localhostPort}/api/posts`);
+    const res = await fetch(`http://localhost:${localhostPort}/api/posts`, {
+      method: "GET",
+      credentials: "include",
+    });
     return await res.json();
   } catch (e) {
     console.log("error", e);
@@ -16,6 +19,7 @@ export const postNewBlogPost = async (req: NewBlogPostReqBody) => {
   try {
     const res = await fetch(`http://localhost:${localhostPort}/api/post`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -34,6 +38,7 @@ export const deleteBlogPost = async (id: number) => {
       `http://localhost:${localhostPort}/api/post/${id}`,
       {
         method: "DELETE",
+        credentials: "include",
       },
     );
     return await res.json();
@@ -49,6 +54,7 @@ export const patchBlogPost = async (req: EditBlogPostReqBody) => {
       `http://localhost:${localhostPort}/api/post/${req.Id}`,
       {
         method: "PATCH",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
