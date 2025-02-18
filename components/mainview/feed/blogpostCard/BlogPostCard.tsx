@@ -84,7 +84,13 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
       setBlogPosts(newPosts);
       setNewlyEditedBlogPost(null);
     }
-  }, [newlyEditedBlogPost, blogPosts, setBlogPosts, likes, setNewlyEditedBlogPost]);
+  }, [
+    newlyEditedBlogPost,
+    blogPosts,
+    setBlogPosts,
+    likes,
+    setNewlyEditedBlogPost,
+  ]);
 
   return (
     <BlogPostCardWrapper lightMode={lightMode}>

@@ -11,19 +11,19 @@ import { WarningBanner } from "../components/WarningBanner";
 import { context } from "../components/Context";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { useRouter } from "next/router";
+import { fetchSignin, fetchSignup } from "../lib/users/users-controller";
+import { UserErrors } from "../lib/users/user-errors";
 
 export default function Home() {
   const { lightMode, setLightMode, setCurrentUser } = useContext(context);
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginWarning, setLoginWarning] = useState(false);
-
-  const loginWarningString = "Please enter a valid username and / or password.";
+  const [loginWarning, setLoginWarning] = useState<string | null>(null);
 
   const pageWarning = () => {
     //idea from Mastodon: @jaseg@chaos.social
-    //navigator.getEnvironmentIntergrity !== undefined
+    //navigator.getEnvironmentIntegrity !== undefined
     if (global.navigator)
       return global.navigator.userAgent.includes("Chrome") ||
         global.navigator.userAgent.includes("Edge")
@@ -32,16 +32,37 @@ export default function Home() {
   };
 
   const checkValue = (value: string) => {
-    value === "" ? setLoginWarning(true) : setLoginWarning(false);
+    value === ""
+      ? setLoginWarning(UserErrors.invalidUsernamePassword)
+      : setLoginWarning(null);
   };
 
-  //eventually set api to check for a valid user login and reject if not
-  const onLogin = () => {
+  const onLogin = async () => {
     if (username.length && !loginWarning && password.length) {
-      setCurrentUser(username);
-      router.push("/MainView");
+      const { isError, errorMessage } = await fetchSignin(username, password);
+
+      if (isError) {
+        setLoginWarning(errorMessage);
+      } else {
+        setCurrentUser(username);
+        await router.push("/MainView");
+      }
     } else {
-      setLoginWarning(true);
+      setLoginWarning(UserErrors.invalidUsernamePassword);
+    }
+  };
+
+  const onSignup = async () => {
+    if (username.length && !loginWarning && password.length) {
+      const { isError, errorMessage } = await fetchSignup(username, password);
+
+      if (isError) {
+        setLoginWarning(errorMessage);
+      } else {
+        await onLogin();
+      }
+    } else {
+      setLoginWarning(UserErrors.invalidUsernamePassword);
     }
   };
 
@@ -75,11 +96,13 @@ export default function Home() {
                 }}
               ></LoginInput>
 
-              {loginWarning ? (
-                <WarningBanner value={loginWarningString} />
+              {loginWarning !== null ? (
+                <WarningBanner value={loginWarning} />
               ) : null}
 
               <LoginButton onClick={() => onLogin()}>Sign in</LoginButton>
+
+              <LoginButton onClick={() => onSignup()}>Sign up</LoginButton>
 
               <ThemeButton
                 onClick={() => {
