@@ -9,7 +9,19 @@ export const postSignIn = async (username: string, password: string) => {
       body: JSON.stringify({ Username: username, Password: password }),
     });
 
-    console.log(res);
+    return res.status;
+  } catch (e) {
+    console.log("error", e);
+    return 500;
+  }
+};
+
+export const getLogout = async () => {
+  try {
+    const res = await fetch(`http://localhost:${localhostPort}/api/logout`, {
+      method: "GET",
+      credentials: "include",
+    });
 
     return res.status;
   } catch (e) {

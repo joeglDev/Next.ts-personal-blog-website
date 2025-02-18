@@ -37,7 +37,6 @@ export default function Home() {
       : setLoginWarning(null);
   };
 
-  // TODO: handle sign out button
   const onLogin = async () => {
     if (username.length && !loginWarning && password.length) {
       const { isError, errorMessage } = await fetchSignin(username, password);
@@ -45,7 +44,6 @@ export default function Home() {
       if (isError) {
         setLoginWarning(errorMessage);
       } else {
-        console.log(isError);
         setCurrentUser(username);
         await router.push("/MainView");
       }
