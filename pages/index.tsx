@@ -12,6 +12,7 @@ import { context } from "../components/Context";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { useRouter } from "next/router";
 import { fetchSignin } from "../lib/users/users-controller";
+import { UserErrors } from "../lib/users/user-errors";
 
 export default function Home() {
   const { lightMode, setLightMode, setCurrentUser } = useContext(context);
@@ -20,17 +21,9 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [loginWarning, setLoginWarning] = useState<string | null>(null);
 
-  const loginWarningInvalidUsernamePassword =
-    "Please enter a valid username and / or password.";
-  const loginWarningInvalidUnauthorised =
-    "User is not authorised. Please create a new account.";
-  const loginWarningInvalidWrongPassword = "The password is incorrect.";
-  const loginWarningInvalidUnhandledException =
-    "An unhandled exception occurred. Please contact the developer.";
-
   const pageWarning = () => {
     //idea from Mastodon: @jaseg@chaos.social
-    //navigator.getEnvironmentIntergrity !== undefined
+    //navigator.getEnvironmentIntegrity !== undefined
     if (global.navigator)
       return global.navigator.userAgent.includes("Chrome") ||
         global.navigator.userAgent.includes("Edge")
@@ -40,34 +33,24 @@ export default function Home() {
 
   const checkValue = (value: string) => {
     value === ""
-      ? setLoginWarning(loginWarningInvalidUsernamePassword)
+      ? setLoginWarning(UserErrors.invalidUsernamePassword)
       : setLoginWarning(null);
   };
 
   // TODO: handle sign out button
   const onLogin = async () => {
     if (username.length && !loginWarning && password.length) {
-      try {
-        const status = await fetchSignin(username, password);
-        console.log("status", status);
+      const { isError, errorMessage } = await fetchSignin(username, password);
 
-        // TODO: move this section of code to controller and hande error in try catch block
-        if (status === 200) {
-          setCurrentUser(username);
-          await router.push("/MainView");
-        } else if (status === 401) {
-          setLoginWarning(loginWarningInvalidWrongPassword);
-        } else if (status === 404) {
-          setLoginWarning(loginWarningInvalidUnauthorised);
-        } else {
-          setLoginWarning(loginWarningInvalidUnhandledException);
-        }
-      } catch (e) {
-        console.error(e);
-        setLoginWarning(loginWarningInvalidUnhandledException);
+      if (isError) {
+        setLoginWarning(errorMessage);
+      } else {
+        console.log(isError);
+        setCurrentUser(username);
+        await router.push("/MainView");
       }
     } else {
-      setLoginWarning(loginWarningInvalidUsernamePassword);
+      setLoginWarning(UserErrors.invalidUsernamePassword);
     }
   };
 
