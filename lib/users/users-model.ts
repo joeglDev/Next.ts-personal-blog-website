@@ -29,3 +29,19 @@ export const getLogout = async () => {
     return 500;
   }
 };
+
+export const postSignup = async (username: string, password: string) => {
+  try {
+    const res = await fetch(`http://localhost:${localhostPort}/api/signup`, {
+      method: "POST",
+      credentials: "include",
+      headers: new Headers({ "content-type": "application/json" }),
+      body: JSON.stringify({ Username: username, Password: password }),
+    });
+
+    return res.status;
+  } catch (e) {
+    console.log("error", e);
+    return 500;
+  }
+};

@@ -1,4 +1,4 @@
-import { getLogout, postSignIn } from "./users-model";
+import { getLogout, postSignIn, postSignup } from "./users-model";
 import { UserErrors } from "./user-errors";
 
 interface UserControllerResponse {
@@ -43,5 +43,28 @@ export const fetchLogout = async () => {
     isError: true,
     errorMessage: UserErrors.unhandledException,
     status: status,
+  };
+};
+
+export const fetchSignup = async (
+  username: string,
+  password: string,
+): Promise<UserControllerResponse> => {
+  const status = await postSignup(username, password);
+
+  if (status === 200) {
+    return { isError: false, errorMessage: null, status: 200 };
+  } else if (status === 400) {
+    return {
+      isError: true,
+      errorMessage: UserErrors.signupUserExists,
+      status: 400,
+    };
+  }
+
+  return {
+    isError: true,
+    errorMessage: UserErrors.unhandledException,
+    status: 500,
   };
 };

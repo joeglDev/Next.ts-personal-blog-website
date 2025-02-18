@@ -11,7 +11,7 @@ import { WarningBanner } from "../components/WarningBanner";
 import { context } from "../components/Context";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { useRouter } from "next/router";
-import { fetchSignin } from "../lib/users/users-controller";
+import { fetchSignin, fetchSignup } from "../lib/users/users-controller";
 import { UserErrors } from "../lib/users/user-errors";
 
 export default function Home() {
@@ -46,6 +46,20 @@ export default function Home() {
       } else {
         setCurrentUser(username);
         await router.push("/MainView");
+      }
+    } else {
+      setLoginWarning(UserErrors.invalidUsernamePassword);
+    }
+  };
+
+  const onSignup = async () => {
+    if (username.length && !loginWarning && password.length) {
+      const { isError, errorMessage } = await fetchSignup(username, password);
+
+      if (isError) {
+        setLoginWarning(errorMessage);
+      } else {
+        await onLogin();
       }
     } else {
       setLoginWarning(UserErrors.invalidUsernamePassword);
@@ -87,6 +101,8 @@ export default function Home() {
               ) : null}
 
               <LoginButton onClick={() => onLogin()}>Sign in</LoginButton>
+
+              <LoginButton onClick={() => onSignup()}>Sign up</LoginButton>
 
               <ThemeButton
                 onClick={() => {
