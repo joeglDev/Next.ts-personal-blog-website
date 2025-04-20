@@ -27,7 +27,7 @@ export default function MainView() {
     };
 
     fetchBlogPosts();
-  }, []);
+  }, [dispatch]);
 
   return (
     <ThemeContainer lightMode={lightMode}>
@@ -37,7 +37,7 @@ export default function MainView() {
           <SidePanel />
         </MainViewItemWrapper>
         <MainViewItemWrapper width={75}>
-          <Feed blogPosts={state.blogPosts} />
+          <Feed blogPosts={state.blogPosts} dispatch={dispatch} />
         </MainViewItemWrapper>
       </MainViewWrapper>
     </ThemeContainer>

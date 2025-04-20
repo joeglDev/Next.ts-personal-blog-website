@@ -1,4 +1,10 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import {
+  ActionDispatch,
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { BlogPost, LikeItem } from "../Feed.types";
 import { BlogPostCardFlex, BlogPostCardWrapper } from "../Feed.style";
 import { context } from "../../../Context";
@@ -6,12 +12,14 @@ import { LikeButton, LikesText } from "./BlogPostCard.style";
 import { deleteBlogPostController } from "../../../../lib/blog-posts/blogPostController";
 import { PostButton } from "../../SidePanel/NewPostPanel.style";
 import { BlogpostImageContainer } from "../blogpostImageContainer/BlogpostImageContainer";
+import { Actions, ActionTypes } from "../../../BlogPostsReducer";
 
 interface BlogPostCardProps {
   post: BlogPost;
+  dispatch: ActionDispatch<[action: Actions]>;
 }
 
-export const BlogPostCard = ({ post }: BlogPostCardProps) => {
+export const BlogPostCard = ({ post, dispatch }: BlogPostCardProps) => {
   const { title, likes, author, content, timeStamp, id: blogpostId } = post;
   const {
     lightMode,
@@ -51,8 +59,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   const handleDeletePost = async (id: number) => {
     const res = await deleteBlogPostController(id);
-    const newPosts = blogPosts.filter((post) => post.id !== id);
-    setBlogPosts(newPosts);
+    dispatch({ type: ActionTypes.DELETE_BLOG_POST, blogPostId: id });
   };
 
   const editPost = (id: number) => {
