@@ -1,4 +1,4 @@
-import {useContext, useEffect, useReducer} from "react";
+import { useContext, useEffect, useReducer } from "react";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { context } from "../components/Context";
 import { SidePanel } from "../components/mainview/SidePanel/SidePanel";
@@ -8,26 +8,26 @@ import {
   MainViewItemWrapper,
   MainViewWrapper,
 } from "../components/mainview/MainView.style";
-import {ActionTypes, blogPostsReducer} from "../components/BlogPostsReducer";
-import {getBlogPostServerProps} from "../lib/blog-posts/blogPostController";
+import { ActionTypes, blogPostsReducer } from "../components/BlogPostsReducer";
+import { getBlogPostServerProps } from "../lib/blog-posts/blogPostController";
 
 export default function MainView() {
   const { lightMode } = useContext(context);
 
-  const [state, dispatch] = useReducer(blogPostsReducer, {blogPosts: []});
+  const [state, dispatch] = useReducer(blogPostsReducer, { blogPosts: [] });
 
   useEffect(() => {
-      const fetchBlogPosts = async () => {
-            try {
-                const data = await getBlogPostServerProps();
-                dispatch({ type: ActionTypes.SET_BLOG_POST, blogPosts: [...data] });
-            } catch (error) {
-                console.error("Failed to fetch blog posts:", error);
-            }
-        };
+    const fetchBlogPosts = async () => {
+      try {
+        const data = await getBlogPostServerProps();
+        dispatch({ type: ActionTypes.SET_BLOG_POST, blogPosts: [...data] });
+      } catch (error) {
+        console.error("Failed to fetch blog posts:", error);
+      }
+    };
 
-        fetchBlogPosts();
-    }, []);
+    fetchBlogPosts();
+  }, []);
 
   return (
     <ThemeContainer lightMode={lightMode}>

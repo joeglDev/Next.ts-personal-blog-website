@@ -1,29 +1,29 @@
-import {BlogPost} from "./mainview/feed/Feed.types";
+import { BlogPost } from "./mainview/feed/Feed.types";
 
 export enum ActionTypes {
-    SET_BLOG_POST = "SET_BLOG_POST",
+  SET_BLOG_POST = "SET_BLOG_POST",
 }
 
 interface SetBlogPostsAction {
-    type: ActionTypes.SET_BLOG_POST;
-    blogPosts: BlogPost[];
+  type: ActionTypes.SET_BLOG_POST;
+  blogPosts: BlogPost[];
 }
 
 type Actions = SetBlogPostsAction;
 
 interface State {
-    blogPosts: BlogPost[];
+  blogPosts: BlogPost[];
 }
 
 export const blogPostsReducer = (state: State, action: Actions): State => {
-    switch (action.type) {
-        case ActionTypes.SET_BLOG_POST:
-            return {
-                blogPosts: action.blogPosts,
-            }
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case ActionTypes.SET_BLOG_POST:
+      return {
+        blogPosts: action.blogPosts,
+      };
+    default:
+      return state;
+  }
 };
 
 /*
