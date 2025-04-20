@@ -7,10 +7,6 @@ interface defaultValueInterface {
   setLightMode: (value: boolean) => void;
   currentUser: string | null;
   setCurrentUser: (value: string | null) => void;
-  editBlogPost: BlogPost | null;
-  setEditBlogPost: (value: BlogPost | null) => void;
-  newlyEditedBlogPost: EditBlogPostReqBody | null;
-  setNewlyEditedBlogPost: (value: EditBlogPostReqBody | null) => void;
 }
 
 const defaultValue: defaultValueInterface = {
@@ -18,10 +14,6 @@ const defaultValue: defaultValueInterface = {
   setLightMode: () => {},
   currentUser: null,
   setCurrentUser: () => {},
-  editBlogPost: null,
-  setEditBlogPost: () => {},
-  newlyEditedBlogPost: null,
-  setNewlyEditedBlogPost: () => {},
 };
 
 export const AppContext = createContext(defaultValue);
@@ -29,11 +21,6 @@ export const AppContext = createContext(defaultValue);
 export const AppContextProvider = (props: PropsWithChildren) => {
   const [lightMode, setLightMode] = useState(defaultValue.lightMode);
   const [currentUser, setCurrentUser] = useState(defaultValue.currentUser);
-  const [editBlogPost, setEditBlogPost] = useState<BlogPost | null>(
-    defaultValue.editBlogPost,
-  );
-  const [newlyEditedBlogPost, setNewlyEditedBlogPost] =
-    useState<EditBlogPostReqBody | null>(null);
 
   return (
     <AppContext.Provider
@@ -42,10 +29,6 @@ export const AppContextProvider = (props: PropsWithChildren) => {
         setLightMode,
         currentUser,
         setCurrentUser,
-        editBlogPost,
-        setEditBlogPost,
-        newlyEditedBlogPost,
-        setNewlyEditedBlogPost,
       }}
     >
       {props.children}

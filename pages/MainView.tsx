@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { ThemeContainer } from "../components/ThemeContainer";
-import {AppContext} from "../components/libs/contexts/AppContext";
+import { AppContext } from "../components/libs/contexts/AppContext";
 import { SidePanel } from "../components/mainview/SidePanel/SidePanel";
 import { Feed } from "../components/mainview/feed/Feed";
 import { NavBar } from "../components/mainview/navbar/NavBar";
@@ -9,12 +9,11 @@ import {
   MainViewWrapper,
 } from "../components/mainview/MainView.style";
 import { getBlogPostServerProps } from "../lib/blog-posts/blogPostController";
-import {BlogPostContext} from "../components/libs/contexts/BlogPostsContext";
+import { BlogPostContext } from "../components/libs/contexts/BlogPostsContext";
 
 export default function MainView() {
   const { lightMode } = useContext(AppContext);
-  const {state, setBlogPosts} = useContext(BlogPostContext);
-  console.log(state.blogPosts);
+  const { state, setBlogPosts } = useContext(BlogPostContext);
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -26,8 +25,8 @@ export default function MainView() {
       }
     };
 
-     fetchBlogPosts();
-  }, []);
+    fetchBlogPosts();
+  }, []); // leave dependency array empty
 
   return (
     <ThemeContainer lightMode={lightMode}>

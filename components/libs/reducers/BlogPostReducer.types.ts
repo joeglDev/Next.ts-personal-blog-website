@@ -1,22 +1,31 @@
-import {BlogPost} from "../../mainview/feed/Feed.types";
+import { BlogPost } from "../../mainview/feed/Feed.types";
 
 export enum ActionTypes {
-    SET_BLOG_POST = "SET_BLOG_POST",
-    DELETE_BLOG_POST = "DELETE_BLOG_POST",
+  SET_BLOG_POST = "SET_BLOG_POST",
+  DELETE_BLOG_POST = "DELETE_BLOG_POST",
+  MUTATE_BLOG_POST = "MUTATE_BLOG_POST",
 }
 
 interface SetBlogPostsAction {
-    type: ActionTypes.SET_BLOG_POST;
-    blogPosts: BlogPost[];
+  type: ActionTypes.SET_BLOG_POST;
+  blogPosts: BlogPost[];
 }
 
 interface DeleteBlogPostAction {
-    type: ActionTypes.DELETE_BLOG_POST;
-    blogPostId: number;
+  type: ActionTypes.DELETE_BLOG_POST;
+  blogPostId: number;
 }
 
-export type Actions = SetBlogPostsAction | DeleteBlogPostAction;
+interface MutateBlogPostAction {
+  type: ActionTypes.MUTATE_BLOG_POST;
+  post: BlogPost;
+}
+
+export type Actions =
+  | SetBlogPostsAction
+  | DeleteBlogPostAction
+  | MutateBlogPostAction;
 
 export interface BlogPostReducerState {
-    blogPosts: BlogPost[];
+  blogPosts: BlogPost[];
 }

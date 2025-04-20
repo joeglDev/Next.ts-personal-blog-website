@@ -1,17 +1,12 @@
-import {
-  Fragment,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { BlogPost } from "../Feed.types";
 import { BlogPostCardFlex, BlogPostCardWrapper } from "../Feed.style";
-import {AppContext} from "../../../libs/contexts/AppContext";
+import { AppContext } from "../../../libs/contexts/AppContext";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
 import { deleteBlogPostController } from "../../../../lib/blog-posts/blogPostController";
 import { PostButton } from "../../SidePanel/NewPostPanel.style";
 import { BlogpostImageContainer } from "../blogpostImageContainer/BlogpostImageContainer";
-import {BlogPostContext} from "../../../libs/contexts/BlogPostsContext";
+import { BlogPostContext } from "../../../libs/contexts/BlogPostsContext";
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -19,19 +14,15 @@ interface BlogPostCardProps {
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const { title, likes, author, content, timeStamp, id: blogpostId } = post;
-  const {
-    lightMode,
-    currentUser,
-    newlyEditedBlogPost,
-    setNewlyEditedBlogPost,
-  } = useContext(AppContext);
+  const { lightMode, currentUser } = useContext(AppContext);
 
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
 
-  const {removeBlogPost, setBlogPosts, state} = useContext(BlogPostContext);
+  const { removeBlogPost, state, editedBlogPost, setEditedBlogPost } =
+    useContext(BlogPostContext);
 
-  const {blogPosts} = state;
+  const { blogPosts } = state;
   const dateTime = new Date(timeStamp);
   const years = dateTime.getFullYear();
   const months =
@@ -62,36 +53,41 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   };
 
   const editPost = (id: number) => {
-    //const post = blogPosts.filter((post) => post.id === id);
-    //setEditBlogPost(post[0]);
+    const post = blogPosts.filter((post) => post.id === id);
+    setEditedBlogPost(post[0]);
   };
 
-  useEffect(() => {
-    if (newlyEditedBlogPost) {
-
+  useEffect(
+    () => {
+      if (editedBlogPost) {
+        /*
       const newPosts = blogPosts.map((post) => {
-        if (post.id === newlyEditedBlogPost.Id) {
+        if (post.id === editedBlogPost.Id) {
           const editedPost: BlogPost = {
-            id: newlyEditedBlogPost.Id,
-            title: newlyEditedBlogPost.Title,
-            author: newlyEditedBlogPost.Author!,
-            content: newlyEditedBlogPost.Content,
+            id: editedBlogPost.Id,
+            title: editedBlogPost.Title,
+            author: editedBlogPost.Author!,
+            content: editedBlogPost.Content,
             likes: likes,
-            timeStamp: newlyEditedBlogPost.TimeStamp,
+            timeStamp: editedBlogPost.TimeStamp,
           };
           return editedPost;
         } else return post;
       });
       setBlogPosts(newPosts);
       setNewlyEditedBlogPost(null);
-    }
-  }, [
+      */
+      }
+    },
+    [
+      /*
     newlyEditedBlogPost,
     blogPosts,
     setBlogPosts,
     likes,
-    setNewlyEditedBlogPost,
-  ]);
+    setNewlyEditedBlogPost,*/
+    ],
+  );
 
   return (
     <BlogPostCardWrapper lightMode={lightMode}>

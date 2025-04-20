@@ -1,6 +1,13 @@
-import {BlogPostReducerState, Actions, ActionTypes} from "./BlogPostReducer.types";
+import {
+  BlogPostReducerState,
+  Actions,
+  ActionTypes,
+} from "./BlogPostReducer.types";
 
-export const blogPostsReducer = (state: BlogPostReducerState, action: Actions): BlogPostReducerState => {
+export const blogPostsReducer = (
+  state: BlogPostReducerState,
+  action: Actions,
+): BlogPostReducerState => {
   switch (action.type) {
     case ActionTypes.SET_BLOG_POST:
       return {
@@ -15,6 +22,18 @@ export const blogPostsReducer = (state: BlogPostReducerState, action: Actions): 
         ...state,
         blogPosts: postsWithRemoval,
       };
+    case ActionTypes.MUTATE_BLOG_POST:
+      const mutatedBogPosts = state.blogPosts.map((post) => {
+        if (post.id === action.post.id) {
+          return { ...action.post };
+        }
+        return post;
+      });
+      return {
+        ...state,
+        blogPosts: mutatedBogPosts,
+      };
+
     default:
       return state;
   }

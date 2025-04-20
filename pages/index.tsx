@@ -8,7 +8,7 @@ import {
   ThemeButton,
 } from "../components/LoginWrapper";
 import { WarningBanner } from "../components/WarningBanner";
-import {AppContext} from "../components/libs/contexts/AppContext";
+import { AppContext } from "../components/libs/contexts/AppContext";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { useRouter } from "next/router";
 import { fetchSignin, fetchSignup } from "../lib/users/users-controller";
