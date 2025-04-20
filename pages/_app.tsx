@@ -1,11 +1,14 @@
 import { AppProps } from "next/app";
-import { ContextProvider } from "../components/Context";
+import { AppContextProvider } from "../components/libs/contexts/AppContext";
 import "../styles/global.css";
+import { BlogPostContextProvider } from "../components/libs/contexts/BlogPostsContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ContextProvider>
-      <Component {...pageProps} />
-    </ContextProvider>
+    <AppContextProvider>
+      <BlogPostContextProvider>
+        <Component {...pageProps} />
+      </BlogPostContextProvider>
+    </AppContextProvider>
   );
 }

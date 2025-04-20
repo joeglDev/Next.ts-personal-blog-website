@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { context } from "../../Context";
+import { AppContext } from "../../libs/contexts/AppContext";
 import {
   PostButton,
   NewPostTextArea,
@@ -10,27 +10,31 @@ import {
   postNewBlogPostController,
 } from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
+import { BlogPostContext } from "../../libs/contexts/BlogPostsContext";
 
 /*
 Todo: edit a post
-1. on click of edit button assign post to context
-2. If context !null then setEditMode(true) and swap post button for edit button
+1. on click of edit button assign post to appContext
+2. If appContext !null then setEditMode(true) and swap post button for edit button
 3. this makes a api request to PUT
 */
 
 export const NewPostPanel = () => {
+  const { lightMode, currentUser } = useContext(AppContext);
+
   const {
-    lightMode,
-    currentUser,
-    blogPosts,
+    state,
     setBlogPosts,
-    editBlogPost,
-    setEditBlogPost,
-    setNewlyEditedBlogPost,
-  } = useContext(context);
+    mutateBlogPost,
+    setEditedBlogPost,
+    editedBlogPost,
+  } = useContext(BlogPostContext);
+
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [emptyWarning, setEmptyWarning] = useState(false);
+
+  const { blogPosts } = state;
 
   const onTitleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setTitle(e.target.value);
@@ -52,7 +56,7 @@ export const NewPostPanel = () => {
         TimeStamp: new Date().toJSON(),
       };
 
-      const res = await postNewBlogPostController(newBlogPostReqBody);
+      const res = await postNewBlogPostController(newBlogPostReqBody); // TODO BE needs to send back ID not just a placeholder of 0
       const allBlogPosts = blogPosts.concat(res);
       setBlogPosts(allBlogPosts);
 
@@ -66,33 +70,29 @@ export const NewPostPanel = () => {
 
   const handleEditRequest = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    /*
-    const mappedLikes: LikedByItem[] = editBlogPost!.likes.map((like) => {
-      return { Id: like.id, UserName: like.username };
-    });
-    */
+    if (editedBlogPost !== null) {
+      const editBlogPostReqBody = {
+        Id: editedBlogPost.id,
+        Author: editedBlogPost.author,
+        Title: title,
+        Content: content,
+        Likes: editedBlogPost.likes,
+        TimeStamp: editedBlogPost.timeStamp,
+      };
 
-    const editBlogPostReqBody = {
-      Id: editBlogPost!.id,
-      Author: editBlogPost!.author,
-      Title: title,
-      Content: content,
-      Likes: editBlogPost!.likes,
-      TimeStamp: editBlogPost!.timeStamp,
-    };
+      const res = await patchBlogPostController(editBlogPostReqBody);
 
-    const res = await patchBlogPostController(editBlogPostReqBody);
-
-    if (res.status === 200) {
-      setEditBlogPost(null);
-      setNewlyEditedBlogPost(editBlogPostReqBody);
+      if (res.status === 200) {
+        setEditedBlogPost(null);
+        mutateBlogPost({ ...editedBlogPost, title, content }); // optimistic rendering
+      }
     }
   };
 
   useEffect(() => {
-    setContent(editBlogPost ? editBlogPost.content : "");
-    setTitle(editBlogPost ? editBlogPost.title : "");
-  }, [editBlogPost]);
+    setContent(editedBlogPost ? editedBlogPost.content : "");
+    setTitle(editedBlogPost ? editedBlogPost.title : "");
+  }, [editedBlogPost]);
 
   return (
     <NewPostWrapper id="post-form" lightMode={lightMode}>
@@ -111,7 +111,7 @@ export const NewPostPanel = () => {
       {emptyWarning ? (
         <WarningBanner value="Please enter a value for title and content" />
       ) : null}
-      {editBlogPost ? (
+      {editedBlogPost ? (
         <PostButton onClick={(e) => handleEditRequest(e)}>Edit</PostButton>
       ) : (
         <PostButton onClick={(e) => handlePostRequest(e)}>Post</PostButton>

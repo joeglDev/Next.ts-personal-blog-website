@@ -8,14 +8,14 @@ import {
   ThemeButton,
 } from "../components/LoginWrapper";
 import { WarningBanner } from "../components/WarningBanner";
-import { context } from "../components/Context";
+import { AppContext } from "../components/libs/contexts/AppContext";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { useRouter } from "next/router";
 import { fetchSignin, fetchSignup } from "../lib/users/users-controller";
 import { UserErrors } from "../lib/users/user-errors";
 
 export default function Home() {
-  const { lightMode, setLightMode, setCurrentUser } = useContext(context);
+  const { lightMode, setLightMode, setCurrentUser } = useContext(AppContext);
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

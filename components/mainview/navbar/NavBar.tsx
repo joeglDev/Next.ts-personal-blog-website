@@ -6,7 +6,7 @@ import {
   NavBarWrapper,
   NavButton,
 } from "./NavBar.style";
-import { context } from "../../Context";
+import { AppContext } from "../../libs/contexts/AppContext";
 import { useRouter } from "next/router";
 import { fetchLogout } from "../../../lib/users/users-controller";
 import { UserErrors } from "../../../lib/users/user-errors";
@@ -14,7 +14,7 @@ import { WarningBanner } from "../../WarningBanner";
 
 export const NavBar = () => {
   const { currentUser, setCurrentUser, lightMode, setLightMode } =
-    useContext(context);
+    useContext(AppContext);
   const router = useRouter();
   const [signoutError, setSignoutError] = useState<UserErrors | null>(null);
 
@@ -26,7 +26,7 @@ export const NavBar = () => {
     } else {
       setSignoutError(null);
       setCurrentUser(null);
-      router.push("/");
+      await router.push("/");
     }
   };
 
