@@ -38,9 +38,3 @@ export const blogPostsReducer = (
       return state;
   }
 };
-
-/*
-TODO: write logic for patch blogposts
-- TODO logic for getting current state
--TODO remove unused states from appContext
- */

@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { BlogPost } from "../Feed.types";
 import { BlogPostCardFlex, BlogPostCardWrapper } from "../Feed.style";
 import { AppContext } from "../../../libs/contexts/AppContext";
@@ -56,38 +56,6 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     const post = blogPosts.filter((post) => post.id === id);
     setEditedBlogPost(post[0]);
   };
-
-  useEffect(
-    () => {
-      if (editedBlogPost) {
-        /*
-      const newPosts = blogPosts.map((post) => {
-        if (post.id === editedBlogPost.Id) {
-          const editedPost: BlogPost = {
-            id: editedBlogPost.Id,
-            title: editedBlogPost.Title,
-            author: editedBlogPost.Author!,
-            content: editedBlogPost.Content,
-            likes: likes,
-            timeStamp: editedBlogPost.TimeStamp,
-          };
-          return editedPost;
-        } else return post;
-      });
-      setBlogPosts(newPosts);
-      setNewlyEditedBlogPost(null);
-      */
-      }
-    },
-    [
-      /*
-    newlyEditedBlogPost,
-    blogPosts,
-    setBlogPosts,
-    likes,
-    setNewlyEditedBlogPost,*/
-    ],
-  );
 
   return (
     <BlogPostCardWrapper lightMode={lightMode}>
