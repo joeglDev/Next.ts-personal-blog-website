@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect } from "react";
 import { ThemeContainer } from "../components/ThemeContainer";
 import { context } from "../components/Context";
 import { SidePanel } from "../components/mainview/SidePanel/SidePanel";
@@ -8,26 +8,25 @@ import {
   MainViewItemWrapper,
   MainViewWrapper,
 } from "../components/mainview/MainView.style";
-import { ActionTypes, blogPostsReducer } from "../components/BlogPostsReducer";
 import { getBlogPostServerProps } from "../lib/blog-posts/blogPostController";
+import {BlogPostContext} from "../components/libs/contexts/BlogPostsContext";
 
 export default function MainView() {
   const { lightMode } = useContext(context);
-
-  const [state, dispatch] = useReducer(blogPostsReducer, { blogPosts: [] });
+  const {state, setBlogPosts} = useContext(BlogPostContext);
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
       try {
         const data = await getBlogPostServerProps();
-        dispatch({ type: ActionTypes.SET_BLOG_POST, blogPosts: [...data] });
+        setBlogPosts([...data]);
       } catch (error) {
         console.error("Failed to fetch blog posts:", error);
       }
     };
 
     fetchBlogPosts();
-  }, [dispatch]);
+  }, [setBlogPosts]);
 
   return (
     <ThemeContainer lightMode={lightMode}>
@@ -37,7 +36,7 @@ export default function MainView() {
           <SidePanel />
         </MainViewItemWrapper>
         <MainViewItemWrapper width={75}>
-          <Feed blogPosts={state.blogPosts} dispatch={dispatch} />
+          <Feed blogPosts={state.blogPosts} />
         </MainViewItemWrapper>
       </MainViewWrapper>
     </ThemeContainer>
