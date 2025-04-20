@@ -56,7 +56,7 @@ export const NewPostPanel = () => {
         TimeStamp: new Date().toJSON(),
       };
 
-      const res = await postNewBlogPostController(newBlogPostReqBody); // TODO BE needs to send back ID not just a placeholder of 0
+      const res = await postNewBlogPostController(newBlogPostReqBody);
       const allBlogPosts = blogPosts.concat(res);
       setBlogPosts(allBlogPosts);
 

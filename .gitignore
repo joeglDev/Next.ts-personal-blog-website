@@ -42,3 +42,6 @@ package-lock.json
 #prettier
 .prettierrc.json
 .prettierignore
+
+.idea/
+.next/
