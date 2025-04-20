@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { ThemeContainer } from "../components/ThemeContainer";
-import { context } from "../components/Context";
+import {AppContext} from "../components/libs/contexts/AppContext";
 import { SidePanel } from "../components/mainview/SidePanel/SidePanel";
 import { Feed } from "../components/mainview/feed/Feed";
 import { NavBar } from "../components/mainview/navbar/NavBar";
@@ -12,7 +12,7 @@ import { getBlogPostServerProps } from "../lib/blog-posts/blogPostController";
 import {BlogPostContext} from "../components/libs/contexts/BlogPostsContext";
 
 export default function MainView() {
-  const { lightMode } = useContext(context);
+  const { lightMode } = useContext(AppContext);
   const {state, setBlogPosts} = useContext(BlogPostContext);
 
   useEffect(() => {

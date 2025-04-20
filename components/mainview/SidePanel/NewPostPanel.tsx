@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { context } from "../../Context";
+import { AppContext } from "../../libs/contexts/AppContext";
 import {
   PostButton,
   NewPostTextArea,
@@ -13,8 +13,8 @@ import { WarningBanner } from "../../WarningBanner";
 
 /*
 Todo: edit a post
-1. on click of edit button assign post to context
-2. If context !null then setEditMode(true) and swap post button for edit button
+1. on click of edit button assign post to appContext
+2. If appContext !null then setEditMode(true) and swap post button for edit button
 3. this makes a api request to PUT
 */
 
@@ -27,7 +27,7 @@ export const NewPostPanel = () => {
     editBlogPost,
     setEditBlogPost,
     setNewlyEditedBlogPost,
-  } = useContext(context);
+  } = useContext(AppContext);
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [emptyWarning, setEmptyWarning] = useState(false);

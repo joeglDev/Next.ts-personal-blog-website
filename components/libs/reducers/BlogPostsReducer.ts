@@ -23,5 +23,5 @@ export const blogPostsReducer = (state: BlogPostReducerState, action: Actions): 
 /*
 TODO: write logic for patch blogposts
 - TODO logic for getting current state
--TODO remove unused states from context
+-TODO remove unused states from appContext
  */

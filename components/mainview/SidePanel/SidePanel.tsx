@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { MainViewItemWrapper } from "../MainView.style";
 import { FeedWrapper } from "../feed/Feed.style";
-import { context } from "../../Context";
+import { AppContext } from "../../libs/contexts/AppContext";
 import { SidePanelWrapper } from "./SidePanel.style";
 import { NewPostPanel } from "./NewPostPanel";
 
-//edit and post a new post
 //stats
 //user page from navbar
 export const SidePanel = () => {
-  const { lightMode } = useContext(context);
+  const { lightMode } = useContext(AppContext);
   return (
     <SidePanelWrapper lightMode={lightMode}>
       <NewPostPanel />

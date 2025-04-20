@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { WarningBanner } from "../../WarningBanner";
 import { FeedWrapper } from "./Feed.style";
-import { context } from "../../Context";
+import { AppContext } from "../../libs/contexts/AppContext";
 import { BlogPostCard } from "./blogpostCard/BlogPostCard";
 import { BlogPost } from "./Feed.types";
 import { BlogPostErrors } from "../../../lib/blog-posts/blogPostErrors";
@@ -11,7 +11,7 @@ interface FeedProps {
 }
 
 export const Feed = ({ blogPosts }: FeedProps) => {
-  const { lightMode } = useContext(context);
+  const { lightMode } = useContext(AppContext);
 
   return (
     <FeedWrapper lightMode={lightMode}>

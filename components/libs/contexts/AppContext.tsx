@@ -1,6 +1,6 @@
 import { PropsWithChildren, createContext, useState } from "react";
-import { BlogPost } from "./mainview/feed/Feed.types";
-import { EditBlogPostReqBody } from "../lib/blog-posts/api.types";
+import { BlogPost } from "../../mainview/feed/Feed.types";
+import { EditBlogPostReqBody } from "../../../lib/blog-posts/api.types";
 
 interface defaultValueInterface {
   lightMode: boolean;
@@ -28,9 +28,9 @@ const defaultValue: defaultValueInterface = {
   setNewlyEditedBlogPost: () => {},
 };
 
-export const context = createContext(defaultValue);
+export const AppContext = createContext(defaultValue);
 
-export const ContextProvider = (props: PropsWithChildren) => {
+export const AppContextProvider = (props: PropsWithChildren) => {
   const [lightMode, setLightMode] = useState(defaultValue.lightMode);
   const [currentUser, setCurrentUser] = useState(defaultValue.currentUser);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
@@ -41,7 +41,7 @@ export const ContextProvider = (props: PropsWithChildren) => {
     useState<EditBlogPostReqBody | null>(null);
 
   return (
-    <context.Provider
+    <AppContext.Provider
       value={{
         lightMode,
         setLightMode,
@@ -56,6 +56,6 @@ export const ContextProvider = (props: PropsWithChildren) => {
       }}
     >
       {props.children}
-    </context.Provider>
+    </AppContext.Provider>
   );
 };

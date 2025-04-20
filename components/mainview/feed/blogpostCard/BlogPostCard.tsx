@@ -6,7 +6,7 @@ import {
 } from "react";
 import { BlogPost } from "../Feed.types";
 import { BlogPostCardFlex, BlogPostCardWrapper } from "../Feed.style";
-import { context } from "../../../Context";
+import {AppContext} from "../../../libs/contexts/AppContext";
 import { LikeButton, LikesText } from "./BlogPostCard.style";
 import { deleteBlogPostController } from "../../../../lib/blog-posts/blogPostController";
 import { PostButton } from "../../SidePanel/NewPostPanel.style";
@@ -24,14 +24,14 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     currentUser,
     newlyEditedBlogPost,
     setNewlyEditedBlogPost,
-  } = useContext(context);
+  } = useContext(AppContext);
+
   const [liked, setLiked] = useState(false);
   const [likedCount, setLikedCount] = useState(0);
 
   const {removeBlogPost, setBlogPosts, state} = useContext(BlogPostContext);
 
   const {blogPosts} = state;
-
   const dateTime = new Date(timeStamp);
   const years = dateTime.getFullYear();
   const months =
