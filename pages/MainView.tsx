@@ -14,6 +14,7 @@ import {BlogPostContext} from "../components/libs/contexts/BlogPostsContext";
 export default function MainView() {
   const { lightMode } = useContext(AppContext);
   const {state, setBlogPosts} = useContext(BlogPostContext);
+  console.log(state.blogPosts);
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
@@ -25,8 +26,8 @@ export default function MainView() {
       }
     };
 
-    fetchBlogPosts();
-  }, [setBlogPosts]);
+     fetchBlogPosts();
+  }, []);
 
   return (
     <ThemeContainer lightMode={lightMode}>

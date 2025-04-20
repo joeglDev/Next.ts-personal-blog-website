@@ -7,8 +7,6 @@ interface defaultValueInterface {
   setLightMode: (value: boolean) => void;
   currentUser: string | null;
   setCurrentUser: (value: string | null) => void;
-  blogPosts: BlogPost[];
-  setBlogPosts: (value: BlogPost[]) => void;
   editBlogPost: BlogPost | null;
   setEditBlogPost: (value: BlogPost | null) => void;
   newlyEditedBlogPost: EditBlogPostReqBody | null;
@@ -20,8 +18,6 @@ const defaultValue: defaultValueInterface = {
   setLightMode: () => {},
   currentUser: null,
   setCurrentUser: () => {},
-  blogPosts: [],
-  setBlogPosts: () => {},
   editBlogPost: null,
   setEditBlogPost: () => {},
   newlyEditedBlogPost: null,
@@ -33,7 +29,6 @@ export const AppContext = createContext(defaultValue);
 export const AppContextProvider = (props: PropsWithChildren) => {
   const [lightMode, setLightMode] = useState(defaultValue.lightMode);
   const [currentUser, setCurrentUser] = useState(defaultValue.currentUser);
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [editBlogPost, setEditBlogPost] = useState<BlogPost | null>(
     defaultValue.editBlogPost,
   );
@@ -47,8 +42,6 @@ export const AppContextProvider = (props: PropsWithChildren) => {
         setLightMode,
         currentUser,
         setCurrentUser,
-        blogPosts,
-        setBlogPosts,
         editBlogPost,
         setEditBlogPost,
         newlyEditedBlogPost,

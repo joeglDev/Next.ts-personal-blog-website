@@ -10,6 +10,7 @@ import {
   postNewBlogPostController,
 } from "../../../lib/blog-posts/blogPostController";
 import { WarningBanner } from "../../WarningBanner";
+import {BlogPostContext} from "../../libs/contexts/BlogPostsContext";
 
 /*
 Todo: edit a post
@@ -22,15 +23,18 @@ export const NewPostPanel = () => {
   const {
     lightMode,
     currentUser,
-    blogPosts,
-    setBlogPosts,
     editBlogPost,
     setEditBlogPost,
     setNewlyEditedBlogPost,
   } = useContext(AppContext);
+
+  const {state, setBlogPosts} = useContext(BlogPostContext);
+
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [emptyWarning, setEmptyWarning] = useState(false);
+
+  const {blogPosts} = state;
 
   const onTitleTextAreaChange = (e: ChangeEvent<HTMLTextAreaElement>) =>
     setTitle(e.target.value);
